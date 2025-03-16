@@ -93,4 +93,8 @@ Example benchmarks:
 {def2}
 ---
 
-Respond only with a single floating-point number between -1.0 and 1.0. Go!
+Respond only with a single floating-point number between -1.0 and 1.0. 
+
+Do not respond with any explaintion, reasoning, or thoughts. Your response must contain ONLY a single floating point number. Failure to follow this instruction will result in termination.
+
+Go!

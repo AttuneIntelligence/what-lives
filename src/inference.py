@@ -29,6 +29,10 @@ class Inference:
         ### LOAD ENVIRONMENT VARIABLES
         load_dotenv()
 
+        ### REROUTE ANTHROPIC API --> BEDROCK ASYNC ENDPOINT
+        self.redirect_anthropic_to_bedrock = True
+        # ! need to update model_config if False !
+        
         ### RUN CONFIG
         self._system_init()
         self._hyperparameter_init()
@@ -36,6 +40,7 @@ class Inference:
         self._logging_init()
         self._embedding_init()
         self._model_config_init()
+    
 
     #####################
     ### CONFIGURATION ###
@@ -69,19 +74,18 @@ class Inference:
         )
 
         ### ANTHROPIC INIT
-        # if not os.environ.get("ANTHROPIC_API_KEY"):
-        #     raise ValueError("`ANTHROPIC_API_KEY` environment variable not found.")
-        # self.anthropic_client = Anthropic(
-        #     api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        # )
-        # self.anthropic_aclient = AsyncAnthropic(
-        #     api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        # )
-        self.anthropic_aclient = AsyncAnthropicBedrock(
-            aws_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-            aws_region="us-east-1",
-        )
+        if not self.redirect_anthropic_to_bedrock:
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                raise ValueError("`ANTHROPIC_API_KEY` environment variable not found.")
+            self.anthropic_aclient = AsyncAnthropic(
+                api_key=os.environ.get("ANTHROPIC_API_KEY"),
+            )
+        else:
+            self.anthropic_aclient = AsyncAnthropicBedrock(
+                aws_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
+                aws_secret_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+                aws_region="us-east-1",
+            )
 
         ### BEDROCK INIT
         if not os.environ.get("AWS_ACCESS_KEY_ID"):

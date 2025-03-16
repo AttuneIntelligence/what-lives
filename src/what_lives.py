@@ -17,6 +17,7 @@ import seaborn as sns
 import textwrap
 from collections import defaultdict
 import datetime
+from matplotlib.gridspec import GridSpec
 
 # nest_asyncio.apply()
 
@@ -501,12 +502,11 @@ class WhatLives:
         return elbow_n_clusters
 
     ### PRIMARY PLOT TO SHOW SORTED CORRELATION MATRIX WITH SUPERIMPOSED LINKAGE DENDROGRAM
-    def plot_clustered_correlation_heatmap(self, correlation_matrix, definitions, filename=None, figsize=(20, 20)):
+    def plot_clustered_correlation_heatmap(self, correlation_matrix, definitions, filename=None, figsize=(28, 20)):
         # Extract names for labels
         names = [d['Name'] for d in definitions]
 
-        # Makes the algorithm more sensitive to strong correlations
-        # # Convert correlation matrix to distance matrix
+        # Convert correlation matrix to distance matrix
         distance_matrix = np.sqrt(2 * (1 - correlation_matrix))  # Using correlation-based distance
         distance_matrix = (distance_matrix + distance_matrix.T) / 2  # Ensure perfect symmetry
 
@@ -526,14 +526,109 @@ class WhatLives:
 
         # Create color palette once for all cluster-related coloring
         unique_clusters = sorted(np.unique(clusters))
-        cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))  # husl gives better color separation
+        cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
         color_map = dict(zip(unique_clusters, cluster_colors))
 
         # Create figure with custom layout
         fig = plt.figure(figsize=figsize)
-        gs = plt.GridSpec(2, 2, width_ratios=[0.2, 1], height_ratios=[0.2, 1])
 
-        # Create link colors based on the clusters
+        # Create a gridspec with proper spacing
+        gs = plt.GridSpec(1, 2, width_ratios=[1, 0.4], wspace=0.03, height_ratios=[1])
+
+        # First, compute dendrogram to get the leaf ordering
+        dendrogram_info = hierarchy.dendrogram(
+            linkage_matrix,
+            no_plot=True,  # Just get the ordering information
+        )
+
+        # Get the order of leaves
+        reordered_idx = dendrogram_info['leaves']
+
+        # Reorder the correlation matrix and names
+        reordered_corr = correlation_matrix[reordered_idx][:, reordered_idx]
+        reordered_names = [names[i] for i in reordered_idx]
+        reordered_clusters = clusters[reordered_idx]
+
+        # Create heatmap (left side)
+        ax_heatmap = fig.add_subplot(gs[0, 0])
+
+        # Plot the heatmap with the original ordering first (will reorient later)
+        im = ax_heatmap.imshow(
+            reordered_corr,
+            aspect='auto',  # Force square cells
+            cmap='RdYlGn',
+            vmin=-1,
+            vmax=1
+        )
+
+        # Set up axes and labels for heatmap
+        ax_heatmap.set_xticks(np.arange(len(reordered_names)))
+        ax_heatmap.set_yticks(np.arange(len(reordered_names)))
+        ax_heatmap.set_xticklabels(reordered_names, rotation=45, ha='right', fontsize=9)
+        ax_heatmap.set_yticklabels(reordered_names, fontsize=9)
+
+        # Flip the y-axis to match dendrogram orientation
+        ax_heatmap.invert_yaxis()
+
+        # Define cluster boundaries in reordered coordinates
+        cluster_boundaries = {}
+        current_cluster = None
+        start_idx = 0
+
+        # Find boundaries for clusters in the x-direction (original order)
+        for idx, cluster_id in enumerate(reordered_clusters):
+            if current_cluster is None:
+                current_cluster = cluster_id
+                start_idx = idx
+            elif cluster_id != current_cluster:
+                cluster_boundaries[current_cluster] = (start_idx, idx - 1)
+                current_cluster = cluster_id
+                start_idx = idx
+
+        # Add the last cluster
+        if current_cluster is not None:
+            cluster_boundaries[current_cluster] = (start_idx, len(reordered_clusters) - 1)
+
+        # Color code tick labels and add cluster boundaries
+        for cluster_id, (start, end) in cluster_boundaries.items():
+            color = color_map[cluster_id]
+
+            # Color the x-axis tick labels
+            for i in range(start, end + 1):
+                ax_heatmap.get_xticklabels()[i].set_color(mcolors.rgb2hex(color))
+                ax_heatmap.get_xticklabels()[i].set_fontweight('bold')
+
+            # Color the y-axis tick labels - matching the flipped orientation
+            for i in range(start, end + 1):
+                ax_heatmap.get_yticklabels()[i].set_color(mcolors.rgb2hex(color))
+                ax_heatmap.get_yticklabels()[i].set_fontweight('bold')
+
+            # Add vertical divider lines
+            if start > 0:
+                ax_heatmap.axvline(x=start-0.5, color='black', linewidth=2.0)
+
+            # Add horizontal divider lines - matching flipped orientation
+            if start > 0:
+                ax_heatmap.axhline(y=start-0.5, color='black', linewidth=2.0)
+
+            # Draw rectangle around each cluster in the heatmap
+            rect = plt.Rectangle(
+                (start - 0.5, start - 0.5),  # Position (x_start, y_start) in flipped coordinates
+                end - start + 1,              # Width
+                end - start + 1,              # Height
+                fill=False,
+                edgecolor=mcolors.rgb2hex(color),
+                linewidth=4,
+                zorder=10
+            )
+            ax_heatmap.add_patch(rect)
+
+        # Add gridlines to heatmap
+        ax_heatmap.set_xticks(np.arange(-.5, len(reordered_names), 1), minor=True)
+        ax_heatmap.set_yticks(np.arange(-.5, len(reordered_names), 1), minor=True)
+        ax_heatmap.grid(which='minor', color='white', linestyle='-', linewidth=0.5)
+
+        # Create link colors for dendrogram
         link_cols = {}
         for i, merge in enumerate(linkage_matrix):
             left = int(merge[0])
@@ -557,115 +652,56 @@ class WhatLives:
                     'cluster': left_cluster
                 }
             else:
-                # For between-cluster merges, use light grey
+                # For between-cluster merges, use dark grey
                 link_cols[i] = {
-                    'color': '#EEEEEE',
+                    'color': '#555555',  # Darker gray for better visibility
                     'cluster': min(left_cluster, right_cluster)
                 }
 
-        # Create dendrogram
+        # Create dendrogram on the right side
         ax_dendrogram = fig.add_subplot(gs[0, 1])
 
-        # Determine link colors before creating dendrogram
+        # Function to determine link colors
         def get_link_color(k):
-            # return link_cols[k]['color']
             if k < len(link_cols):
                 return link_cols[k]['color']
-            return 'lightgrey'  # Default color for links outside clusters
+            return 'black'  # Black for better visibility
 
-        # Create dendrogram with our custom colors
-        dendrogram = hierarchy.dendrogram(
+        # Create dendrogram with orientation='right'
+        R = hierarchy.dendrogram(
             linkage_matrix,
-            labels=names,
-            leaf_rotation=0,
-            leaf_font_size=0,
+            orientation='right',       # Orient to right side
+            labels=None,               # No labels
+            no_labels=True,            # Explicitly no labels
             ax=ax_dendrogram,
-            link_color_func=get_link_color
+            link_color_func=get_link_color,
+            above_threshold_color='black'
         )
 
-        # Get reordering information
-        reordered_idx = dendrogram['leaves']
-
-        # Reorder everything
-        reordered_corr = correlation_matrix[reordered_idx][:, reordered_idx]
-        reordered_names = [names[i] for i in reordered_idx]
-        reordered_clusters = clusters[reordered_idx]
-
-        # Clean up dendrogram
+        # Clean up dendrogram axes
+        ax_dendrogram.spines['top'].set_visible(False)
+        ax_dendrogram.spines['right'].set_visible(False)
+        ax_dendrogram.spines['bottom'].set_visible(False)
+        ax_dendrogram.spines['left'].set_visible(False)
+        ax_dendrogram.tick_params(bottom=False, left=False)
         ax_dendrogram.set_xticks([])
-        for spine in ax_dendrogram.spines.values():
-            spine.set_visible(False)
-
-        # Create heatmap
-        ax_heatmap = fig.add_subplot(gs[1, 1])
-
-        # Flip matrix for bottom-left to top-right diagonal
-        reordered_corr = np.flipud(reordered_corr)
-        reordered_names_reversed = list(reversed(reordered_names))
-        reordered_clusters_reversed = list(reversed(reordered_clusters))
-
-        im = ax_heatmap.imshow(
-            reordered_corr,
-            aspect='auto',
-            cmap='RdYlGn',
-            vmin=-1,
-            vmax=1
-        )
-
-        # Set up axes and labels
-        ax_heatmap.set_xticks(np.arange(len(reordered_names)))
-        ax_heatmap.set_yticks(np.arange(len(reordered_names)))
-        ax_heatmap.set_xticklabels(reordered_names, rotation=45, ha='right')
-        ax_heatmap.set_yticklabels(reordered_names_reversed)
-
-        # Color code labels and add divider lines between clusters
-        prev_cluster_x = None
-        prev_cluster_y = None
-
-        for idx, (xlabel, ylabel) in enumerate(zip(ax_heatmap.get_xticklabels(), 
-                                                 ax_heatmap.get_yticklabels())):
-            xlabel_cluster = reordered_clusters[idx]
-            ylabel_cluster = reordered_clusters_reversed[idx]
-
-            # Color the labels
-            xlabel.set_color(color_map[xlabel_cluster])
-            ylabel.set_color(color_map[ylabel_cluster])
-            xlabel.set_fontsize(10)
-            ylabel.set_fontsize(10)
-
-            # Add vertical lines between different clusters on x-axis
-            if prev_cluster_x is not None and xlabel_cluster != prev_cluster_x:
-                ax_heatmap.axvline(x=idx-0.5, color='black', linewidth=0.7)
-            prev_cluster_x = xlabel_cluster
-
-            # Add horizontal lines between different clusters on y-axis
-            if prev_cluster_y is not None and ylabel_cluster != prev_cluster_y:
-                ax_heatmap.axhline(y=idx-0.5, color='black', linewidth=0.7)
-            prev_cluster_y = ylabel_cluster
-
-        # Add gridlines
-        ax_heatmap.set_xticks(np.arange(-.5, len(reordered_names), 1), minor=True)
-        ax_heatmap.set_yticks(np.arange(-.5, len(reordered_names), 1), minor=True)
-        ax_heatmap.grid(which='minor', color='white', linestyle='-', linewidth=0.5)
-
-        # Adjust layout
-        gs.update(wspace=0.02, hspace=0.02)
+        ax_dendrogram.set_yticks([])
 
         # Add title
         plt.suptitle(
             'Clustered Definition Correlations',
-            fontsize=16, 
+            fontsize=20, 
             fontweight='bold',
-            y=0.95
+            y=0.98
         )
 
-        # Final layout adjustment
-        plt.tight_layout(rect=[0, 0, 0.95, 0.95])
+        # Final layout adjustment - using subplots_adjust instead of tight_layout
+        plt.subplots_adjust(left=0.05, right=0.9, top=0.95, bottom=0.1)
 
-        # Add saving and final rendering
+        # Save figure if filename provided
         if filename:
             fout = os.path.join(self.output_dir, filename)
-            plt.savefig(fout, dpi=600, bbox_inches='tight')
+            plt.savefig(fout, dpi=400, bbox_inches='tight')
 
         # Force complete rendering of the figure
         fig.canvas.draw()
