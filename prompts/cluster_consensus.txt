@@ -1,6 +1,7 @@
-You are tasked with synthesizing a consensus definition of life from a group of experts who have similar perspectives. Below are their definitions:
+You are tasked with synthesizing a consensus definition of life from a group of experts who have similar perspectives. You will be provided with the definitions.
+In addition to these provided defitions, you will be provided with a thematic analysis that has been conducted already on this set of inter-related ideas.
 
-{definitions}
+---
 
 ## Output Requirements
 Generate single consensus definition:
@@ -13,5 +14,5 @@ Generate single consensus definition:
 - Exclude: Unique views, novel terms, explanations
 
 ## Return Format 
-One paragraph only.
-No notes, context, or justification.
+Maximum one paragraph only.
+No notes, context, or justification. Repond with ONLY the appropriate definition of life given the provided context.

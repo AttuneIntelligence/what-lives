@@ -2,86 +2,72 @@
 
 ## MEMBERS
 
-* Audrey Dussutour
-* Jamie A. Davies
+* Anna Ciaunica
 
 ## CONSENSUS
 
-Life is a dynamic, non-equilibrium process characterized by self-organization, self-regulation, and the ability to maintain and repair itself through controlled interactions with its environment. It exhibits responsiveness to external and internal stimuli, utilizes energy, and demonstrates organization and action, with populations capable of reproduction.
+Life is the dynamic and continuous process of maintaining balance through interaction with others and the environment, inherently relational and interdependent, uncreated and received as a pre-existing phenomenon, and imbued with the intrinsic value of a gift.
 
 ## ANALYSIS
 
-# Definition Theme Analysis
+### Key Themes List
+"These definitions share 4 major themes:"
+1. **Movement and Balance**  
+   - Present in: "permanent movement of our bodies towards a balanced exchange"  
+   - Importance: Suggests life is dynamic and involves continuous interaction.  
+   - Usage: Frames life as an ongoing process of maintaining equilibrium between internal and external environments.  
 
-## Key Themes List
-"These definitions share 6 major themes:"
-1. **Dynamic Process and Self-Organization**
-   - Present in both definitions.
-   - Life is understood as a dynamic, emergent process arising from interactions between components.
-   - Highlights the importance of organization and interaction rather than static states.
+2. **Interdependence**  
+   - Present in: "Life is what cannot exist without an other, already being there, already alive."  
+   - Importance: Highlights the relational nature of life, emphasizing connection and dependence on others.  
+   - Usage: Positions life as inherently tied to the existence and presence of others.  
 
-2. **Reproduction**
-   - Explicitly mentioned in both definitions.
-   - Seen as a key characteristic of life, though the second definition notes it is a property of populations rather than individuals.
-   - Emphasizes the continuity of life through generational transfer.
+3. **Uncreated and Received**  
+   - Present in: "Life is not something we can create or make. Life is something we have received, like a gift."  
+   - Importance: Stresses the idea of life as a pre-existing phenomenon, not a human construct.  
+   - Usage: Frames life as a given, something beyond human control or invention.  
 
-3. **Autonomy and Self-Regulation**
-   - Both definitions stress autonomy, with terms like "self-regulation" and "control over interactions with the environment."
-   - Indicates that living systems maintain internal stability and independence despite external influences.
-
-4. **Response to Stimuli**
-   - The first definition explicitly mentions responsiveness to internal and external stimuli.
-   - The second definition implies responsiveness through feedback mechanisms and interaction with the environment.
-   - Suggests adaptability and interaction as critical for life.
-
-5. **Energy Use and Maintenance**
-   - Both definitions highlight energy production and use, with the second emphasizing maintenance and repair.
-   - Suggests that life requires active processes to sustain itself and counteract entropy.
-
-6. **Plasticity and Material Flexibility**
-   - The first definition mentions "plasticity," while the second notes that life can emerge from various material compositions.
-   - Suggests that adaptability and flexibility in form and function are integral to life.
+4. **Gift-like Quality**  
+   - Present in: "Life is something we have received, like a gift."  
+   - Importance: Adds a layer of gratitude or reverence to the concept of life.  
+   - Usage: Suggests life is something to be valued and appreciated, rather than taken for granted.  
 
 ---
 
-## Connection Map
+### Connection Map
 "These themes connect in the following ways:"
-- **Dynamic Process ↔ Self-Organization ↔ Autonomy**  
-  - Life emerges from interactions (self-organization) and sustains itself through autonomy and self-regulation.
-  - Autonomy ensures the system remains dynamic and functional despite external changes.
-  
-- **Reproduction ↔ Energy Use ↔ Maintenance**  
-  - Reproduction relies on energy production and the ability to maintain and repair systems.
-  - Maintenance ensures the longevity of individuals, while reproduction ensures the continuity of populations.
+- **Movement and Balance ↔ Interdependence**  
+   - Relationship: The dynamic exchange between inside and outside inherently involves others (e.g., ecosystems, relationships).  
+   - Why: Life's balance depends on external factors, reinforcing its relational nature.  
 
-- **Response to Stimuli ↔ Plasticity ↔ Adaptability**  
-  - Responsiveness and plasticity allow living systems to adapt to changing environments.
-  - These traits ensure survival and functionality in diverse conditions.
+- **Interdependence ↔ Uncreated and Received**  
+   - Relationship: Life's reliance on others ties to the idea that it is not self-made but inherited.  
+   - Why: The existence of others (already alive) is a prerequisite for life, aligning with the notion of life as a gift.  
 
-- **Material Flexibility ↔ Organization and Action**  
-  - The second definition emphasizes that life can arise from different material bases, as long as organization and action are present.
-  - Suggests that the essence of life is not tied to specific materials but to the processes and interactions they enable.
+- **Uncreated and Received ↔ Gift-like Quality**  
+   - Relationship: The idea of life as a gift naturally follows from the belief that it is not something humans can create.  
+   - Why: If life is received rather than made, it carries an inherent value and sense of gratitude.  
+
+- **Movement and Balance ↔ Gift-like Quality**  
+   - Relationship: The ongoing process of maintaining balance can be seen as part of honoring the "gift" of life.  
+   - Why: Recognizing life as a gift may inspire care and effort in sustaining it.  
 
 ---
 
-## Shared Approach
+### Shared Approach
 "The definitions share these characteristics:"
-- **Common Methods**  
-  - Both use a systems-based approach, focusing on interactions, feedback, and processes rather than static properties.
-  
-- **Similar Assumptions**  
-  - Both assume that life is defined by its processes (e.g., self-organization, energy use) rather than its specific material composition.
-  
-- **Shared Boundaries**  
-  - Both definitions exclude equilibrium systems and emphasize the need for active maintenance and interaction with the environment.
-  
-- **Collective Focus**  
-  - Both highlight the importance of populations (e.g., reproduction) and individual systems (e.g., autonomy, maintenance) in defining life.
+- **Dynamic and Relational Framework**  
+   - Life is described as an active, ongoing process involving interaction and balance.  
+   - Emphasis on relationships (with others, with the environment) is central.  
 
----
+- **Philosophical and Reflective Tone**  
+   - The definitions lean on abstract, existential ideas rather than concrete biological explanations.  
 
-## Summary
-These definitions converge on a systems-oriented view of life, emphasizing dynamic processes, self-organization, and adaptability. They highlight the interplay between autonomy, energy use, and interaction with the environment as central to being alive. While reproduction is a shared theme, the second definition nuances it as a population-level property rather than an individual one. Both definitions allow for flexibility in the material basis of life, focusing instead on the processes and interactions that sustain it.
+- **Non-Anthropocentric Perspective**  
+   - Life is not portrayed as a human-centered phenomenon but as something larger, pre-existing, and universal.  
+
+- **Valuation of Life**  
+   - Life is framed as precious, something to be appreciated and respected, rather than controlled or manufactured.  
 
 ---
 
@@ -89,122 +75,53 @@ These definitions converge on a systems-oriented view of life, emphasizing dynam
 
 ## MEMBERS
 
-* Pranab Das
+* Frantisek Baluska
 
 ## CONSENSUS
 
-Life is the collection of systems capable of ongoing self-assembly, regulation, and persistence, characterized by processes that are sustained and reproduced across generations.
+Life is living cells and all their constructs.
 
 ## ANALYSIS
 
-# Definition Theme Analysis
-
-## Analysis Steps
-
-### 1. WHAT Are The Core Ideas?
-- **Key Concepts Identified:**
-  - Systems capable of ongoing self-assembly
-  - Regulation
-  - Endurance over long time periods
-  - Internal function
-  - Processes as a "story"
-  - Reproduction through generations
-
-- **Frequency and Grouping:**
-  - **Self-assembly, regulation, and endurance** are grouped as characteristics of living systems.
-  - **Processes as a "story"** and **reproduction through generations** focus on continuity and transmission of life.
-
-- **Most Common Concepts:**
-  - Systems with self-regulation and endurance
-  - Continuity and generational reproduction
-
-- **Always Present Concepts:**
-  - Life as a system/process
-  - Continuity across time
-
----
-
-### 2. HOW Do Ideas Connect?
-- **Concept Connections:**
-  - **Self-assembly, regulation, and endurance** are interconnected as essential properties enabling life to persist.
-  - **Processes as a "story"** links to **reproduction through generations**, emphasizing the narrative-like continuity of life.
-  - **Endurance** depends on the ability to regulate and self-assemble, showing a hierarchy of functions.
-
-- **Central Hub Concepts:**
-  - The idea of "life as a system" serves as the central hub, connecting all other ideas.
-
-- **Idea Flow Patterns:**
-  - Starts with describing the properties of life (self-assembly, regulation, endurance).
-  - Moves to the concept of life as a process or "story."
-  - Ends with the generational transmission of these processes.
-
----
-
-### 3. WHY This Structure?
-- **Common Approaches:**
-  - Focus on life as a system/process rather than a static entity.
-  - Emphasis on continuity and generational reproduction.
-
-- **Shared Frameworks:**
-  - Systems theory: Life is described in terms of systems capable of self-regulation and persistence.
-  - Narrative framework: Life is seen as a "story" passed down through generations.
-
-- **Reasoning Patterns:**
-  - Life is defined by its ability to endure and self-regulate over time.
-  - The concept of continuity is central, tying together processes and reproduction.
-
-- **Scope Boundaries:**
-  - The definition excludes non-living systems by emphasizing self-assembly, regulation, and endurance over long time scales.
-
-- **Definitional Strategies:**
-  - Combines functional (what life does) and temporal (how life persists) perspectives.
-  - Uses metaphor ("story") to make abstract concepts relatable.
-
----
-
-## Output Format
-
-### 1. Key Themes List
+### Key Themes List
 "These definitions share X major themes:"
-- **Life as a system/process:**
-  - Present in all aspects of the definition.
-  - Important because it frames life as dynamic and functional rather than static.
-  - Used to describe the properties of self-assembly, regulation, and endurance.
+1. **Living Cells**  
+   - Present in the definition as the foundational unit of life.  
+   - Important because cells are universally recognized as the basic building blocks of all living organisms.  
+   - Used to establish the biological basis of life.
 
-- **Continuity across time:**
-  - Present in the emphasis on endurance and generational reproduction.
-  - Important because it highlights the persistence of life over long periods.
-  - Used to connect the idea of life as a "story" with reproduction.
+2. **Constructs of Living Cells**  
+   - Included as an extension of living cells.  
+   - Important because it broadens the scope of life to include structures, systems, and entities derived from or composed of living cells (e.g., tissues, organs, organisms, ecosystems).  
+   - Used to capture the complexity and interconnectedness of life beyond individual cells.
 
----
-
-### 2. Connection Map
+### Connection Map
 "These themes connect in the following ways:"
-- **Life as a system/process** links to **self-assembly, regulation, and endurance** as essential properties.
-- **Endurance** connects to **continuity across time** through the idea of generational reproduction.
-- **Processes as a "story"** ties to both **continuity** and **reproduction**, emphasizing the narrative of life.
+1. **Living Cells as the Core**  
+   - The definition positions living cells as the central, irreducible element of life.  
+   - All constructs are dependent on or derived from living cells, creating a hierarchical relationship.
 
-**Patterns:**
-- Central hub: Life as a system/process.
-- Hierarchical structure: Properties (self-assembly, regulation) enable endurance, which supports continuity and reproduction.
+2. **Constructs Expand the Scope**  
+   - The inclusion of "constructs" links the micro (individual cells) to the macro (systems, organisms, and beyond).  
+   - This connection emphasizes that life is not just cellular but also includes emergent properties and larger systems.
 
----
+3. **Biological Unity and Complexity**  
+   - The relationship between cells and their constructs highlights the unity of life (all life starts with cells) and its complexity (life evolves into diverse forms and systems).  
 
-### 3. Shared Approach
+### Shared Approach
 "The definitions share these characteristics:"
-- **Common methods:**
-  - Systems-based description of life.
-  - Use of metaphor ("story") for conceptual clarity.
+1. **Biological Framework**  
+   - The definition is rooted in biology, emphasizing the cellular nature of life.  
+   - Assumes that life must involve biological processes and structures.
 
-- **Similar assumptions:**
-  - Life is dynamic, not static.
-  - Continuity is a defining feature of life.
+2. **Hierarchical Thinking**  
+   - Reflects a layered understanding of life, starting from the smallest unit (cells) and expanding outward to include their constructs.  
 
-- **Shared boundaries:**
-  - Excludes non-living systems by requiring self-regulation and endurance.
+3. **Inclusive Scope**  
+   - The definition avoids limiting life to a single level of organization, instead encompassing both the microscopic and macroscopic aspects of living systems.  
 
-- **Collective focus:**
-  - Emphasis on persistence, functionality, and generational transmission.
+4. **Focus on Tangibility**  
+   - The definition is grounded in observable, physical entities (cells and their constructs), avoiding abstract or metaphysical interpretations of life.
 
 ---
 
@@ -212,67 +129,99 @@ Life is the collection of systems capable of ongoing self-assembly, regulation, 
 
 ## MEMBERS
 
-* Laryssa Albantakis
+* Jamie A. Davies
+* Pranab Das
 
 ## CONSENSUS
 
-Life is a functional construct characterized by a set of sub-processes, including homeostasis and reproduction, serving as a framework for understanding biological systems.
+Life is a dynamic, non-equilibrium system characterized by self-maintenance, regulation, and interaction with its environment, enabling the persistence of organized complexity and continuity through reproduction or endurance over time, independent of specific material composition.
 
 ## ANALYSIS
 
-# Definition Theme Analysis
-
-## Key Themes List
+### Key Themes List
 "These definitions share X major themes:"
-1. **Life as a Functional Construct**
-   - Present in all parts of the definition
-   - Emphasizes life as a set of processes (e.g., homeostasis, reproduction)
-   - Important because it allows for a reductionist, scientific approach to defining life
-   - Used to frame life as analyzable and measurable through its functions
 
-2. **Relativity of Definitions**
-   - Explicitly stated in the definition
-   - Highlights that no single definition of life is "right" or "wrong"
-   - Important for accommodating diverse perspectives across disciplines
-   - Used to stress the utility and inclusivity of definitions rather than their absoluteness
+1. **Non-Equilibrium Systems**
+   - Mentioned in both definitions.
+   - Highlights that living things are not in a state of thermodynamic equilibrium.
+   - Used to emphasize the dynamic and active nature of life, requiring constant energy input and regulation.
 
-3. **Life as a Label**
-   - Central to the definition's philosophical stance
-   - Suggests that "alive" is a human-constructed term
-   - Important for understanding life as a conceptual framework rather than an absolute truth
-   - Used to emphasize the subjective and practical nature of defining life
+2. **Self-Maintenance and Regulation**
+   - Present in both definitions.
+   - Includes concepts like feedback, self-repair, and self-assembly.
+   - Important because it underscores the autonomy of living systems in maintaining their structure and function.
 
-## Connection Map
+3. **Interaction with Environment**
+   - Semi-permeability and control over environmental exchanges are explicitly mentioned in the first definition.
+   - Implied in the second definition through the idea of regulation and endurance.
+   - Used to show how living systems are open systems that interact with their surroundings.
+
+4. **Reproduction and Continuity**
+   - Both definitions address reproduction, though the first clarifies that reproduction is not necessary for every individual but is a property of populations.
+   - The second definition frames reproduction as part of the "story" of life passed through generations.
+   - Highlights the importance of continuity and the propagation of life over time.
+
+5. **Organization and Complexity**
+   - Both definitions stress the organized nature of living systems.
+   - The first mentions "organization and action," while the second refers to "ongoing self-assembly."
+   - Used to emphasize the structured and purposeful processes that define life.
+
+6. **Material Independence**
+   - The first definition explicitly states that life can be realized through various material compositions.
+   - Implies that life is defined more by its processes and organization than by its specific physical makeup.
+
+7. **Time and Endurance**
+   - The second definition introduces the concept of endurance over time, with life persisting far beyond the timescales of its internal processes.
+   - Highlights the long-term stability and persistence of living systems.
+
+### Connection Map
 "These themes connect in the following ways:"
-1. **Life as a Functional Construct ↔ Relativity of Definitions**
-   - The functional approach to defining life supports the idea that definitions are tools, not absolute truths.
-   - The reductionist view allows for flexibility in how life is defined across fields.
 
-2. **Relativity of Definitions ↔ Life as a Label**
-   - The notion that definitions are neither right nor wrong aligns with the idea that "alive" is just a label.
-   - Both themes underscore the subjective and pragmatic nature of defining life.
+1. **Non-Equilibrium Systems ↔ Self-Maintenance and Regulation**
+   - Living systems remain out of equilibrium by actively regulating their internal states.
+   - Feedback mechanisms are central to maintaining this dynamic balance.
 
-3. **Life as a Functional Construct ↔ Life as a Label**
-   - Viewing life as a set of processes reinforces the idea that "alive" is a label applied based on specific criteria.
-   - The functional perspective provides a framework for assigning the label "alive" in a systematic way.
+2. **Interaction with Environment ↔ Non-Equilibrium Systems**
+   - Semi-permeability and environmental exchanges are necessary to sustain the non-equilibrium state.
+   - Living systems control these interactions to maintain their internal organization.
 
-## Shared Approach
+3. **Reproduction and Continuity ↔ Organization and Complexity**
+   - The organized structure of life allows for the reproduction and transmission of its "story" across generations.
+   - Complexity enables the processes required for continuity.
+
+4. **Material Independence ↔ Organization and Complexity**
+   - The focus on organization rather than material composition suggests that life is defined by its processes, not its physical substrate.
+   - This connects to the idea that life could theoretically arise in diverse material forms.
+
+5. **Time and Endurance ↔ Reproduction and Continuity**
+   - The endurance of life over long timescales is made possible by the reproduction and propagation of living systems.
+   - Life's "story" persists through generational continuity.
+
+### Shared Approach
 "The definitions share these characteristics:"
-1. **Reductionist Framework**
-   - Breaks life down into measurable sub-processes (e.g., homeostasis, reproduction).
-   - Assumes life can be understood through its components.
 
-2. **Pragmatic Utility**
-   - Focuses on definitions being useful for researchers rather than universally correct.
-   - Prioritizes inclusivity and specificity based on context.
+1. **Dynamic Systems Perspective**
+   - Both definitions view life as an active, dynamic process rather than a static state.
+   - Emphasize ongoing regulation, self-maintenance, and interaction with the environment.
 
-3. **Philosophical Relativity**
-   - Acknowledges that "alive" is a human-constructed label.
-   - Avoids absolute or rigid definitions, favoring flexibility and adaptability.
+2. **Process-Oriented Framework**
+   - Life is described in terms of processes (e.g., self-assembly, regulation, reproduction) rather than specific physical traits.
+   - Suggests a broad, inclusive view of what constitutes life.
 
-4. **Interdisciplinary Relevance**
-   - Designed to be applicable across various scientific and philosophical fields.
-   - Encourages collaboration and dialogue by avoiding overly narrow definitions.
+3. **Emphasis on Continuity**
+   - Both definitions highlight the importance of continuity, whether through reproduction or endurance over time.
+   - Life is framed as a persistent "story" or process that transcends individual organisms.
+
+4. **Systems Thinking**
+   - Life is understood as a system with interconnected components (e.g., feedback, environmental interaction, organization).
+   - This holistic approach captures the complexity of living systems.
+
+5. **Flexibility in Material Basis**
+   - The first definition explicitly allows for diverse material compositions, while the second implies it through its focus on processes.
+   - Both suggest that life is not tied to a specific biochemical substrate, opening the door to alternative forms of life.
+
+### Summary
+These definitions converge on a dynamic, systems-based understanding of life, emphasizing non-equilibrium states, self-regulation, interaction with the environment, and continuity through reproduction or endurance. They share a process-oriented framework that prioritizes organization and action over specific material compositions, reflecting a flexible and inclusive view of what it means to be alive.
 
 ---
 
@@ -280,82 +229,355 @@ Life is a functional construct characterized by a set of sub-processes, includin
 
 ## MEMBERS
 
-* Frantisek Baluska
+* Audrey Dussutour
 
 ## CONSENSUS
 
-Life is a self-sustaining system capable of growth, reproduction, and response to environmental stimuli, composed of organized biochemical processes within cellular structures.
+Life is a dynamic, self-organizing system characterized by the ability to reproduce, maintain autonomy through self-regulation, respond to internal and external stimuli, adapt with plasticity, and produce and utilize energy to sustain its processes.
 
 ## ANALYSIS
 
-# Definition Theme Analysis Protocol
+### Key Themes List
+"These definitions share 5 major themes:"
+1. **Reproduction**  
+   - Present as a core characteristic of life.  
+   - Important because it ensures the continuity of life and the propagation of units within the system.  
+   - Used as a fundamental marker to differentiate living systems from non-living ones.
 
-## Definitions
-1. Life: Living Cells and All Their Constructs
+2. **Autonomy (Self-Regulation)**  
+   - Highlighted as the ability of life to maintain internal stability and independence.  
+   - Important for sustaining life processes despite external changes.  
+   - Used to emphasize the self-organizing nature of life.
 
----
+3. **Response to Stimuli**  
+   - Includes reactions to both external and internal signals.  
+   - Important for adaptability and interaction with the environment.  
+   - Used to demonstrate the dynamic and interactive nature of life.
 
-### Analysis
+4. **Plasticity**  
+   - Defined as the capacity for change, adaptation, or flexibility.  
+   - Important for evolution and survival in varying conditions.  
+   - Used to show life’s ability to evolve and adjust over time.
 
-#### 1. WHAT Are The Core Ideas?
-- **Key concepts identified:**
-  - "Living cells"
-  - "Constructs" (of living cells)
+5. **Energy Production and Use**  
+   - Describes the ability to generate and utilize energy for sustaining processes.  
+   - Important as energy is fundamental for maintaining life functions.  
+   - Used to underline the metabolic aspect of life.
 
-- **Frequency and grouping:**
-  - "Living cells" is the central concept and appears explicitly.
-  - "Constructs" is a secondary concept, dependent on "living cells."
-
-- **Always present:**
-  - The definition revolves entirely around "living cells" and their extensions, making it the core idea.
-
-#### 2. HOW Do Ideas Connect?
-- **Connections:**
-  - The concept of "constructs" is directly tied to "living cells," implying that constructs (e.g., tissues, organs, ecosystems) are extensions or results of living cells.
-  
-- **Hierarchy:**
-  - "Living cells" is the foundational concept, while "constructs" are derived or built upon it.
-
-- **Central hub:**
-  - "Living cells" acts as the central hub, with "constructs" branching out as dependent entities.
-
-#### 3. WHY This Structure?
-- **Common approach:**
-  - The definition adopts a biological and cellular framework, emphasizing the foundational role of cells in defining life.
-  
-- **Reasoning pattern:**
-  - The definition focuses on a bottom-up approach, starting with the smallest unit of life (cells) and extending outward to include their larger constructs.
-
-- **Scope boundaries:**
-  - The definition excludes non-cellular entities (e.g., viruses) and focuses strictly on cellular life and its manifestations.
-
-- **Definitional strategy:**
-  - The definition is concise and categorical, aiming to encapsulate life within a cellular framework.
-
----
-
-### Output
-
-#### 1. Key Themes List
-"These definitions share X major themes:"
-  - **Living cells**: Central to the definition; foundational unit of life.
-  - **Constructs of cells**: Secondary theme; includes all structures and systems derived from living cells.
-
-#### 2. Connection Map
+### Connection Map
 "These themes connect in the following ways:"
-  - **Living cells → Constructs**: Constructs are dependent on and arise from living cells.
-  - **Hierarchy**: Living cells are the base, and constructs are the extensions or results of cellular activity.
+- **Reproduction** and **Energy Production/Use** are directly linked, as energy is required for the processes of replication and growth.  
+- **Autonomy** depends on **Energy Production/Use**, as self-regulation requires metabolic activity.  
+- **Response to Stimuli** connects with **Plasticity**, as adaptability often involves reacting to environmental changes.  
+- **Self-Organization** acts as a central hub concept, linking all the themes together. It underpins the ability to reproduce, self-regulate, respond, adapt, and manage energy.  
+- The flow pattern suggests a cycle: energy enables autonomy, which supports response and plasticity, feeding back into reproduction and self-organization.
 
-#### 3. Shared Approach
+### Shared Approach
 "The definitions share these characteristics:"
-  - **Common methods**: Cellular biology framework.
-  - **Similar assumptions**: Life is fundamentally cellular.
-  - **Shared boundaries**: Excludes non-cellular entities.
-  - **Collective focus**: Emphasis on the foundational role of cells and their contributions to larger systems.
+- **Common Methods**: Focus on dynamic processes and systems thinking, emphasizing networks of interactions.  
+- **Similar Assumptions**: Life is inherently self-organizing and requires energy to sustain its processes.  
+- **Shared Boundaries**: Definitions exclude non-living systems by requiring reproduction, autonomy, and energy use.  
+- **Collective Focus**: Emphasis on adaptability, interaction, and the emergent properties of life as a system.  
+
+This analysis reveals a holistic and systems-based understanding of life, emphasizing interconnected processes and emergent properties.
 
 ---
 
 # CLUSTER 5
+
+## MEMBERS
+
+* Douglas Brash
+
+## CONSENSUS
+
+Life is a dynamic process of continuous development, characterized by the integration of simpler components into increasingly complex hierarchical systems.
+
+## ANALYSIS
+
+### Key Themes List
+"These definitions share 3 major themes:"
+1. **Living as a Process**  
+   - Present in all definitions.  
+   - Emphasizes that living is dynamic and ongoing, not static or tied to a specific object or state.  
+   - Used to shift focus from material or fixed entities to continuous activity and change.
+
+2. **Development**  
+   - Central to the definition.  
+   - Highlights growth, transformation, and progression over time.  
+   - Suggests that living involves movement toward complexity or improvement.
+
+3. **Hierarchy of Levels**  
+   - Explicitly mentioned.  
+   - Refers to the organization of simpler components into more complex systems.  
+   - Important for understanding living as a structured and emergent process.
+
+---
+
+### Connection Map
+"These themes connect in the following ways:"
+- **Living as a Process** is the overarching concept that ties everything together. It provides the framework for understanding development and hierarchy.  
+- **Development** is a key mechanism of the process of living. It describes how living unfolds and progresses.  
+- **Hierarchy of Levels** is the outcome of development, where lower-level components integrate to form higher-level systems.  
+- The relationship is sequential: *Process → Development → Hierarchical Organization*.  
+- The flow pattern suggests that living is not just about existing but about *becoming*—a constant movement toward greater complexity.
+
+---
+
+### Shared Approach
+"The definitions share these characteristics:"
+- **Dynamic Perspective**: They avoid static or fixed notions of living, focusing instead on change and activity.  
+- **Emergent Framework**: They assume that living arises from interactions and integration of simpler parts into complex wholes.  
+- **Holistic View**: They consider living as more than the sum of its parts, emphasizing the importance of relationships and organization.  
+- **Developmental Focus**: They prioritize growth and progression as central to the concept of living.  
+- **Process-Oriented Thinking**: They define living not as a "thing" but as an ongoing, evolving activity.  
+
+This shared approach reflects a systems-thinking perspective, where living is understood as an emergent property of dynamic, interconnected processes.
+
+---
+
+# CLUSTER 6
+
+## MEMBERS
+
+* Laryssa Albantakis
+
+## CONSENSUS
+
+Life is a functional construct defined by a set of sub-processes, such as homeostasis and reproduction, distinct from consciousness, and understood as a human-defined label rather than an intrinsic property, with definitions judged by their utility and flexibility rather than absolute correctness.
+
+## ANALYSIS
+
+### Key Themes List
+"These definitions share 4 major themes:"
+1. **Distinction Between Consciousness and Life**  
+   - Present in all aspects of the definition.  
+   - Highlights that consciousness ("feeling of being") is separate from life as a functional construct.  
+   - Important for clarifying that life can be defined mechanistically, while consciousness is more abstract.  
+   - Used to set the conceptual boundary between subjective experience and biological processes.
+
+2. **Reductionist Approach to Life**  
+   - Life is described as a set of sub-processes (e.g., homeostasis, reproduction).  
+   - Emphasized as a functional and mechanistic construct.  
+   - Important for enabling a scientific, measurable framework for defining life.  
+   - Used to break down life into observable, analyzable components.
+
+3. **Flexibility and Subjectivity of Definitions**  
+   - Definitions of life are neither "right" nor "wrong."  
+   - Instead, they are judged by their specificity, inclusivity, and utility.  
+   - Important for acknowledging the diversity of perspectives across disciplines.  
+   - Used to promote a pragmatic rather than dogmatic approach to defining life.
+
+4. **"Alive" as a Label**  
+   - Being "alive" is framed as a matter of definition rather than an intrinsic property.  
+   - Highlights the constructed nature of the term.  
+   - Important for emphasizing the role of human categorization in understanding life.  
+   - Used to challenge essentialist views and encourage definitional flexibility.
+
+---
+
+### Connection Map
+"These themes connect in the following ways:"
+- **Consciousness vs. Life** → **Reductionist Approach to Life**  
+   - The distinction between consciousness and life allows life to be treated as a functional construct, enabling reductionist definitions.  
+   - Consciousness remains outside this framework, reinforcing the mechanistic focus on life.
+
+- **Reductionist Approach to Life** → **Flexibility of Definitions**  
+   - The reductionist view supports the idea that definitions can vary based on the processes included (e.g., homeostasis, reproduction).  
+   - This flexibility aligns with the notion that definitions are tools rather than absolute truths.
+
+- **Flexibility of Definitions** → **"Alive" as a Label**  
+   - The subjective nature of definitions supports the idea that "alive" is a label rather than an inherent property.  
+   - This connection emphasizes the constructed and context-dependent nature of defining life.
+
+- **"Alive" as a Label** → **Consciousness vs. Life**  
+   - Framing "alive" as a label underscores the distinction between the subjective experience of being (consciousness) and the functional processes of life.  
+   - This reinforces the idea that life is a definitional construct rather than a universal truth.
+
+---
+
+### Shared Approach
+"The definitions share these characteristics:"
+1. **Reductionist Framework**  
+   - All definitions approach life as a set of functional sub-processes.  
+   - This allows for measurable, scientific analysis.
+
+2. **Pragmatic Perspective**  
+   - Definitions are judged by their utility for researchers rather than their correctness.  
+   - This reflects a practical, interdisciplinary approach.
+
+3. **Constructivist Assumption**  
+   - Life and "alive" are treated as human-defined constructs.  
+   - This challenges essentialist or intrinsic views of life.
+
+4. **Conceptual Boundaries**  
+   - A clear distinction is drawn between consciousness and life.  
+   - This boundary helps focus the discussion on functional processes rather than subjective experience.
+
+---
+
+# CLUSTER 7
+
+## MEMBERS
+
+* Leo Caves
+
+## CONSENSUS
+
+Life is a persistent dynamic pattern discerned through the interaction between an observer and their environment, characterized by recursive dynamics within a closed system that sustain rhythmic patterns and resonance. These patterns manifest materially through the regulated flow of energy and matter, maintaining dynamic equilibrium. Life exhibits nested dynamical structuring, enabling autonomous behaviors and adaptability, with its complexity and persistence arising from the interplay of relational, physical, and systemic processes.
+
+## ANALYSIS
+
+### Key Themes List
+"These definitions share X major themes:"
+
+1. **Dynamic Patterns**  
+   - Present throughout the definition.  
+   - Central to the concept of life, emphasizing its persistence and rhythmic nature.  
+   - Used to describe life as an ongoing process rather than a static entity.
+
+2. **Observer-Environment Coupling**  
+   - Repeatedly emphasized.  
+   - Highlights the relational aspect of life, where life is discerned through the interaction between an observer and their environment.  
+   - Suggests that life is not just intrinsic but also contextually defined.
+
+3. **Recursive Dynamics**  
+   - Key to understanding the self-sustaining nature of life.  
+   - Describes how life emerges from and is maintained by feedback loops within a closed system.  
+   - Essential for the persistence and transformation of life forms.
+
+4. **Eurhythmicity and Resonance**  
+   - Central to the structural and functional harmony of life.  
+   - Explains how patterns are sustained through rhythmic interactions and resonance.  
+   - Important for the generation and replication of life’s structures.
+
+5. **Material Expression (Energy and Matter Homeorhesis)**  
+   - Life is grounded in physical processes, specifically the flow and regulation of energy and matter.  
+   - Describes how life manifests materially while maintaining dynamic equilibrium.  
+
+6. **Nested Dynamical Structuring**  
+   - Life is characterized by hierarchical yet interconnected layers of organization.  
+   - Highlights the complexity and heterarchical nature of life’s structure.  
+
+7. **Autonomy and Behavior**  
+   - Life exhibits autonomous behaviors and a repertoire of responses to its environment.  
+   - Suggests agency and adaptability as key features of life.
+
+---
+
+### Connection Map
+"These themes connect in the following ways:"
+
+- **Dynamic Patterns ↔ Observer-Environment Coupling**  
+  - Life’s patterns are discerned through the interaction between an observer and the environment, emphasizing relational dynamics.
+
+- **Recursive Dynamics ↔ Eurhythmicity and Resonance**  
+  - Feedback loops (recursion) sustain the rhythmic patterns that define life, creating harmony and persistence.
+
+- **Eurhythmicity ↔ Material Expression**  
+  - The rhythmic patterns find physical manifestation in the flow and regulation of energy and matter, ensuring life’s material continuity.
+
+- **Nested Structuring ↔ Autonomy and Behavior**  
+  - The hierarchical organization of life supports its autonomous behaviors and adaptability, enabling complex interactions with the environment.
+
+- **Observer-Environment Coupling ↔ Autonomy and Behavior**  
+  - The observer distinguishes life through its autonomous behaviors and interactions with the environment, reinforcing the relational aspect.
+
+---
+
+### Shared Approach
+"The definitions share these characteristics:"
+
+1. **Relational Framework**  
+   - Life is defined not in isolation but through its interaction with the environment and the observer.  
+   - Emphasizes the importance of context and relationships.
+
+2. **Process-Oriented View**  
+   - Life is seen as a dynamic, ongoing process rather than a static state.  
+   - Focuses on patterns, rhythms, and transformations.
+
+3. **Complex Systems Thinking**  
+   - Life is described as a nested, heterarchical system with multiple layers of organization.  
+   - Incorporates ideas from systems theory and complexity science.
+
+4. **Integration of Physical and Abstract**  
+   - Combines material aspects (energy, matter) with abstract concepts (patterns, resonance).  
+   - Bridges the gap between physical sciences and philosophical perspectives.
+
+5. **Focus on Autonomy and Adaptability**  
+   - Life is characterized by its ability to sustain itself, adapt, and exhibit autonomous behaviors.  
+   - Highlights the agency and resilience of living systems.
+
+---
+
+# CLUSTER 8
+
+## MEMBERS
+
+* Philip Ball
+
+## CONSENSUS
+
+Life is a system exhibiting agency, characterized by the ability to autonomously manipulate itself and its environment in pursuit of internally determined goals, enabled by a sustained thermodynamic separation from its surroundings and context- and history-dependent responses to stimuli.
+
+## ANALYSIS
+
+### Key Themes List
+"These definitions share X major themes:"
+1. **Agency**  
+   - Mentioned explicitly as a defining feature of living systems.  
+   - Important because it emphasizes autonomy and goal-directed behavior, distinguishing living systems from non-living ones.  
+   - Used to describe the ability of living systems to manipulate themselves and their environment in pursuit of goals.  
+
+2. **Thermodynamic Separation**  
+   - Highlighted as a characteristic feature of agency.  
+   - Important for defining the boundary between the agent (living system) and its environment.  
+   - Used to explain how living systems maintain distinct internal states while interacting with their surroundings.  
+
+3. **Context- and History-Dependence**  
+   - Identified as a key feature of agency.  
+   - Important because it suggests that living systems' responses are shaped by both external stimuli and their internal states, which are informed by past experiences.  
+   - Used to differentiate living systems from purely reactive or mechanistic systems.  
+
+4. **Evolution by Natural Selection**  
+   - Mentioned as a mechanism, not an intrinsic property of life.  
+   - Important because it provides a known pathway for the emergence of complexity necessary for agency.  
+   - Used to clarify that evolution is a means to an end (complexity and agency) rather than a defining characteristic of life itself.  
+
+### Connection Map
+"These themes connect in the following ways:"
+- **Agency and Thermodynamic Separation**  
+  - Agency depends on the ability of a system to maintain a distinct boundary between itself and its environment. This separation enables the system to act autonomously and pursue goals.  
+
+- **Agency and Context-/History-Dependence**  
+  - Agency is further characterized by the system's ability to adapt its behavior based on both external conditions and internal states informed by past experiences. This connection underscores the complexity of living systems' decision-making processes.  
+
+- **Thermodynamic Separation and Evolution by Natural Selection**  
+  - The sustained separation of agent and environment is likely a prerequisite for the complexity that evolution by natural selection can act upon.  
+
+- **Evolution by Natural Selection and Agency**  
+  - Evolution is presented as the mechanism by which the complexity required for agency arises, linking the process of evolution to the emergence of life-like behaviors.  
+
+### Shared Approach
+"The definitions share these characteristics:"
+- **Focus on Agency**  
+  - The definition prioritizes agency over other traditional markers of life, such as reproduction or metabolism. This reflects a shift toward understanding life as a dynamic, goal-directed process.  
+
+- **Thermodynamic and Systems Perspective**  
+  - The emphasis on thermodynamic separation and internal states suggests a systems-based approach to defining life, focusing on the interplay between a system and its environment.  
+
+- **Non-Essentialist View of Evolution**  
+  - Evolution is not treated as an inherent property of life but as a mechanism that facilitates the emergence of complexity and agency. This reflects a nuanced understanding of evolution's role in the origin of life.  
+
+- **Operationalization of Agency**  
+  - The definition suggests that agency, rather than life itself, may be more readily definable. This pragmatic approach acknowledges the challenges of creating a universal definition of life while focusing on measurable characteristics.  
+
+- **Avoidance of Universality**  
+  - The definition explicitly avoids claiming a universal definition of life, reflecting an awareness of the limitations of our current understanding of complex matter and living systems.  
+
+---
+
+# CLUSTER 9
 
 ## MEMBERS
 
@@ -364,391 +586,81 @@ Life is a self-sustaining system capable of growth, reproduction, and response t
 
 ## CONSENSUS
 
-Life is a self-organizing process arising from the laws of physics and chemistry, characterized by the emergence of complex computational systems capable of sustaining, reproducing, and adapting to their environment.
+Life is an emergent phenomenon characterized by the self-organization of matter or systems into complex, info-computational networks capable of sustaining, adapting, and evolving through dynamic stability and evolutionary selection, independent of specific physical substrates.
 
 ## ANALYSIS
 
-# Definition Theme Analysis
-
-## Key Themes List
+### Key Themes List
 "These definitions share 4 major themes:"
 
-1. **Life as a Computational Process**  
-   - Present in both definitions  
-   - Emphasizes the role of computation in defining life  
-   - Used to explain life as a dynamic, self-modifying system capable of processing information  
+1. **Computation and Information Processing**
+   - Present in both definitions.
+   - Life is described as a computational process or info-computational network.
+   - Important because it frames life as fundamentally tied to processing and organizing information, rather than being restricted to specific physical materials.
+   - Used to emphasize the dynamic, adaptable, and evolving nature of life.
 
-2. **Emergence and Self-Organization**  
-   - Present in both definitions  
-   - Highlights life as an emergent phenomenon arising from fundamental laws (e.g., physics, chemistry, or computation)  
-   - Describes how life organizes itself into complex systems  
+2. **Emergence and Complexity**
+   - Both definitions highlight life as an emergent phenomenon.
+   - Life arises from simpler components (matter, physics, chemistry) into complex systems.
+   - Important because it underlines the transition from non-living to living systems through self-organization and increasing complexity.
+   - Used to explain how life develops and evolves over time.
 
-3. **Adaptation and Evolution**  
-   - Present in both definitions  
-   - Focuses on life’s ability to adapt, evolve, and sustain itself through dynamic stability or environmental interaction  
-   - Suggests that evolutionary processes are central to life’s complexity  
+3. **Adaptation and Evolution**
+   - Both definitions refer to life’s ability to adapt and evolve.
+   - Evolutionary selection and adaptation to the environment are central to the concept of life.
+   - Important because it explains life’s dynamic stability and capacity for change.
+   - Used to connect life to broader natural processes like evolution and survival.
 
-4. **Non-Physical Possibilities**  
-   - Present in the first definition, implied in the second  
-   - Expands life’s definition beyond physical matter to include computational or abstract environments  
-   - Suggests that life could exist in non-traditional substrates, such as digital or virtual systems  
+4. **Non-Physical or Universal Applicability**
+   - Both definitions allow for life to exist beyond traditional physical matter.
+   - Life is not confined to biological systems but can exist in any computationally supportive environment, including digital or artificial systems.
+   - Important because it broadens the scope of life beyond Earth-centric or carbon-based frameworks.
+   - Used to explore life in theoretical, extraterrestrial, or artificial contexts.
 
-## Connection Map
+---
+
+### Connection Map
 "These themes connect in the following ways:"
 
-1. **Computation as the Core Mechanism**  
-   - Both definitions link computation to emergence, self-organization, and adaptation  
-   - Life is framed as a computational process that enables self-organization and evolutionary dynamics  
+1. **Computation ↔ Emergence and Complexity**
+   - Computation is the mechanism through which complexity emerges.
+   - Life’s self-organization and increasing complexity are framed as computational processes.
 
-2. **Emergence Drives Complexity**  
-   - Emergence is described as the foundational process that leads to increasingly complex systems capable of computation and adaptation  
-   - Complexity is tied to life’s ability to sustain itself and evolve  
+2. **Emergence and Complexity ↔ Adaptation and Evolution**
+   - Complexity enables systems to adapt and evolve.
+   - Evolutionary selection acts on emergent systems to refine and stabilize life.
 
-3. **Adaptation Enables Stability**  
-   - Adaptation is a key mechanism ensuring dynamic stability and survival in changing environments  
-   - Evolutionary selection is presented as the process that refines this adaptability  
+3. **Computation ↔ Adaptation and Evolution**
+   - Computational systems are inherently adaptable, allowing for evolutionary processes to occur.
+   - Life’s ability to process and respond to information is key to its survival and evolution.
 
-4. **Broad Scope of Life**  
-   - Both definitions suggest that life is not limited to traditional biological forms  
-   - The inclusion of non-physical or info-computational systems broadens the conceptual boundaries of life  
+4. **Non-Physical Applicability ↔ Computation**
+   - The computational definition of life allows it to exist in non-physical forms.
+   - Life’s essence is tied to information processing, not material composition.
 
-## Shared Approach
+5. **Non-Physical Applicability ↔ Emergence and Complexity**
+   - Emergence of life is not restricted to physical matter but can occur in any system capable of supporting complexity.
+
+---
+
+### Shared Approach
 "The definitions share these characteristics:"
 
-1. **Focus on Computational and Informational Frameworks**  
-   - Both definitions emphasize life as a computational or info-processing system  
-   - Cognition and computation are central to understanding life’s processes  
-
-2. **Emergent and Systems-Based Thinking**  
-   - Both adopt a systems approach, viewing life as emergent from simpler components  
-   - Self-organization and complexity are recurring themes  
-
-3. **Dynamic and Evolutionary Perspective**  
-   - Both definitions highlight life’s dynamic nature, emphasizing evolution, adaptation, and stability  
-   - Evolutionary selection is seen as a driving force behind life’s complexity  
-
-4. **Expanded Boundaries of Life**  
-   - Both definitions challenge traditional views of life as strictly biological  
-   - They propose that life could exist in computational or abstract environments, broadening its potential scope  
-
-## Summary
-These definitions converge on a computational and emergent understanding of life, emphasizing its dynamic, adaptive, and evolutionary nature. They share a systems-based approach and expand the concept of life beyond physical matter, suggesting it could exist in non-traditional substrates. This shared framework reflects a modern, interdisciplinary perspective on life, blending physics, computation, and systems theory.
-
----
-
-# CLUSTER 6
-
-## MEMBERS
-
-* David Ackley
-
-## CONSENSUS
-
-Life is a self-sustaining system capable of maintaining and replicating its structural and functional patterns.
-
-## ANALYSIS
-
-# Definition Theme Analysis
-
-## Key Themes List
-"These definitions share X major themes:"
-1. **Machine-Like Nature of Life**  
-   - Present in this definition.  
-   - Life is described as a "machine," emphasizing its functional and systematic nature.  
-   - Important because it frames life as a process or mechanism rather than a static entity.  
-   - Used to highlight the operational and dynamic aspects of living systems.
-
-2. **Preservation of Patterns**  
-   - Central to this definition.  
-   - Life is defined by its ability to maintain and preserve its patterns over time.  
-   - Important because it focuses on the continuity and self-sustaining processes of life.  
-   - Used to underscore the adaptive and self-organizing characteristics of living systems.
-
-## Connection Map
-"These themes connect in the following ways:"
-1. **Machine-Like Nature ↔ Preservation of Patterns**  
-   - The concept of life as a "machine" is directly tied to its ability to preserve patterns.  
-   - The machine metaphor suggests that life operates systematically to achieve the goal of pattern preservation.  
-   - This connection implies that the essence of life lies in its functional and goal-oriented processes.
-
-## Shared Approach
-"The definitions share these characteristics:"
-1. **Functional Perspective**  
-   - Life is defined by what it *does* (preserving patterns) rather than what it *is*.  
-   - This approach focuses on the actions and processes of living systems.
-
-2. **Abstract and Generalized**  
-   - The definition avoids specific biological or physical traits, making it applicable to a wide range of systems, including non-organic or artificial ones.
-
-3. **Mechanistic Assumption**  
-   - Life is assumed to operate systematically, like a machine, with an inherent purpose or function (pattern preservation).  
-   - This reflects a systems-thinking approach to understanding life.
-
-4. **Focus on Continuity**  
-   - The emphasis on "preserving patterns" highlights the importance of stability, replication, and adaptation in defining life.  
-
-This definition provides a concise and systems-oriented perspective, prioritizing the functional and self-sustaining characteristics of life.
-
----
-
-# CLUSTER 7
-
-## MEMBERS
-
-* Philip Ball
-
-## CONSENSUS
-
-Life is a system exhibiting agency, characterized by the ability to manipulate itself and its environment to achieve autonomously determined goals, maintaining a sustained thermodynamic separation from its surroundings and demonstrating context- and history-dependent responses to stimuli based on internal states.
-
-## ANALYSIS
-
-# Definition Theme Analysis Protocol
-
-## Input Definition
-"I don’t believe we have an adequate understanding of the range of possible behaviors in complex matter to attempt any universal definition of life, but to the extent that we know them, living systems all exhibit agency: the ability to manipulate themselves and their environment to achieve autonomously determined goals. I believe that it should be possible to operationalize a notion of agency more readily than to do so for “life”. Characteristic features would include a sustained thermodynamic separation of agent and environment, and a context- and history-dependence of responses to stimuli: an agent’s behavior makes reference not just to external conditions but to internal states. In addition: evolution by natural selection is not an intrinsic property of living things, but rather, is the only mechanism currently known by which the necessary complexity for agency might arise spontaneously."
-
----
-
-## Analysis
-
-### 1. WHAT Are The Core Ideas?
-- **Key Concepts Identified**:
-  1. **Agency**: Defined as the ability to manipulate oneself and the environment to achieve autonomous goals.
-  2. **Thermodynamic separation**: A sustained distinction between the agent and its environment.
-  3. **Context- and history-dependence**: Responses to stimuli depend on both external conditions and internal states.
-  4. **Evolution by natural selection**: Not intrinsic to life but a mechanism for achieving complexity.
-  5. **Complex matter**: The range of behaviors in complex systems is not fully understood.
-  6. **Autonomy**: A defining feature of agency and living systems.
-
-- **Frequency and Importance**:
-  - **Agency** is central, appearing multiple times and framed as the defining characteristic of living systems.
-  - **Thermodynamic separation** and **context/history-dependence** are key features of agency.
-  - **Evolution by natural selection** is mentioned as a mechanism for complexity but not intrinsic to life itself.
-  - **Complex matter** and its behaviors are acknowledged as a limitation in defining life universally.
-
-- **Always Present Concepts**:
-  - **Agency** is the consistent focus, with all other ideas supporting or elaborating on it.
-
----
-
-### 2. HOW Do Ideas Connect?
-- **Connections Between Concepts**:
-  - **Agency** is the central hub concept, connecting to all other ideas.
-  - **Thermodynamic separation** and **context/history-dependence** are described as necessary conditions for agency.
-  - **Evolution by natural selection** is linked as the process through which agency-capable complexity arises.
-  - **Complex matter** is the broader context, highlighting the difficulty in defining life universally but narrowing the focus to agency.
-
-- **Hierarchy of Ideas**:
-  - **Agency** sits at the top as the defining characteristic of living systems.
-  - **Thermodynamic separation** and **context/history-dependence** are subordinate features that enable agency.
-  - **Evolution by natural selection** is a supporting mechanism for achieving the complexity required for agency.
-
-- **Patterns**:
-  - The definition moves from broad (complex matter, life) to specific (agency, its features, and mechanisms).
-  - There is a clear emphasis on operationalizing **agency** over attempting to define **life** universally.
-
----
-
-### 3. WHY This Structure?
-- **Common Approaches**:
-  - Focus on **agency** as a more tangible and operationalizable concept than "life."
-  - Emphasis on observable and measurable features (e.g., thermodynamic separation, context-dependence).
-
-- **Shared Frameworks**:
-  - A systems-based perspective, viewing living systems as agents interacting with their environment.
-  - Acknowledgment of the role of natural selection in enabling complexity but not as a defining feature of life.
-
-- **Reasoning Patterns**:
-  - The argument builds from the limitations of defining life universally to proposing **agency** as a more practical focus.
-  - Features of agency are described in terms of physical and behavioral properties, grounding the concept in observable phenomena.
-
-- **Scope Boundaries**:
-  - The definition avoids a universal claim about life and instead narrows the focus to systems exhibiting **agency**.
-  - Evolution is framed as a mechanism rather than a defining property, further refining the scope.
-
-- **Definitional Strategies**:
-  - The definition prioritizes operationalization and measurable criteria over abstract or universal claims.
-  - It uses a hierarchical structure, with **agency** as the core and its features and mechanisms as supporting elements.
-
----
-
-## Output
-
-### 1. Key Themes List
-"These definitions share X major themes:"
-  - **Agency**: Central to the definition, described as the ability to manipulate oneself and the environment to achieve autonomous goals.
-    - Importance: Frames the discussion of life around a specific, operationalizable concept.
-    - Usage: Defined through features like thermodynamic separation and context/history-dependence.
-  - **Thermodynamic separation**: A necessary condition for agency, distinguishing the agent from its environment.
-    - Importance: Highlights the physical basis of agency.
-    - Usage: Describes the sustained separation that enables autonomous behavior.
-  - **Context- and history-dependence**: A feature of agency, where responses depend on both external and internal states.
-    - Importance: Emphasizes the adaptive and dynamic nature of agents.
-    - Usage: Links agency to both environmental and internal factors.
-  - **Evolution by natural selection**: A mechanism for achieving complexity, not intrinsic to life.
-    - Importance: Explains how agency-capable systems might arise spontaneously.
-    - Usage: Provides a context for understanding the emergence of complexity.
-
----
-
-### 2. Connection Map
-"These themes connect in the following ways:"
-  - **Agency** is the central concept, linking to all other ideas.
-  - **Thermodynamic separation** and **context/history-dependence** are enabling features of agency.
-  - **Evolution by natural selection** is a mechanism that supports the emergence of agency-capable complexity.
-  - **Complex matter** provides the broader context, highlighting the challenges of defining life universally but focusing the discussion on agency.
-
----
-
-### 3. Shared Approach
-"The definitions share these characteristics:"
-  - **Common methods**: Focus on observable, measurable features (e.g., thermodynamic separation, context-dependence).
-  - **Similar assumptions**: Life is too complex to define universally; agency is a more practical focus.
-  - **Shared boundaries**: Avoids universal claims about life, focusing instead on systems exhibiting agency.
-  - **Collective focus**: Emphasis on operationalizing agency as a defining characteristic of living systems.
-
----
-
-# CLUSTER 8
-
-## MEMBERS
-
-* Douglas Brash
-
-## CONSENSUS
-
-Life is a process of development characterized by the organization and emergence of higher hierarchical levels from lower levels.
-
-## ANALYSIS
-
-# Definition Theme Analysis
-
-## Key Themes List
-"These definitions share 3 major themes:"
-1. **Living as a Process**
-   - Present in all definitions.
-   - Emphasizes that living is dynamic and ongoing, not static or tied to a specific state or substance.
-   - Used to shift focus from material or fixed properties to actions and changes over time.
-
-2. **Development**
-   - Central to the definition.
-   - Highlights growth, transformation, and progression as integral to the concept of living.
-   - Suggests that living involves continuous improvement or complexity.
-
-3. **Hierarchical Levels**
-   - Found in the explanation of living.
-   - Indicates that living involves organizing simpler components into more complex systems.
-   - Used to illustrate the structured and layered nature of life processes.
-
-## Connection Map
-"These themes connect in the following ways:"
-- **Living as a Process** is the overarching concept that ties the other themes together. It frames development and hierarchical structuring as dynamic actions rather than static traits.
-- **Development** is a key characteristic of the process of living, describing how it unfolds over time.
-- **Hierarchical Levels** are the result of the developmental process, showing how living systems build complexity through organization.
-- The relationship between these ideas forms a flow: *Living (process) → Development (action) → Hierarchical Levels (outcome).*
-
-## Shared Approach
-"The definitions share these characteristics:"
-- **Dynamic Perspective**: They avoid static or material definitions, focusing instead on processes and actions.
-- **Complexity and Organization**: They emphasize the importance of building and structuring systems as a hallmark of living.
-- **Relational Thinking**: They view living as interconnected and dependent on interactions between different levels of organization.
-- **Focus on Change**: They assume that living is inherently tied to growth, transformation, and progression over time.
-
----
-
-# CLUSTER 9
-
-## MEMBERS
-
-* Leo Caves
-
-## CONSENSUS
-
-Life is a persistent dynamic pattern characterized by recursive interactions within a closed topological form, emerging and transforming through rhythmic patterns that sustain harmonic structures. These patterns manifest through energy and matter homeorhesis, distinguishing entities with nested dynamical structuring capable of autonomous and adaptive behaviors.
-
-## ANALYSIS
-
-# Definition Theme Analysis
-
-## Key Themes List
-"These definitions share X major themes:"
-1. **Dynamic Patterns**
-   - Present throughout the definition.
-   - Life is described as a "persistent dynamic pattern."
-   - Emphasized as central to the concept of life, highlighting its constantly changing yet recognizable nature.
-
-2. **Observer-Environment Coupling**
-   - Explicitly mentioned as a core idea.
-   - Life is discerned through the interaction between an observer and their environment.
-   - Important because it introduces a relational perspective, where life is not isolated but understood through its context.
-
-3. **Recursive Dynamics**
-   - Life is tied to "intrinsically recursive dynamics" on a closed topological form.
-   - Suggests self-referential processes are fundamental to life.
-   - Highlights the importance of feedback loops and self-organization.
-
-4. **Resonance and Rhythmic Patterns**
-   - Life emerges and transforms within a "matrix of rhythmic patterns."
-   - Resonance generates "harmonic structures" that persist and replicate.
-   - Suggests that life is deeply tied to rhythmic, cyclical processes.
-
-5. **Eurhythmicity**
-   - A novel term used to describe the sustained harmony of patterns.
-   - Highlights the balance and coordination necessary for life's persistence.
-
-6. **Material Expression in Energy and Matter**
-   - Life is actualized in "energy and matter homeorhesis."
-   - Suggests that physical and energetic flows are essential to life's processes.
-
-7. **Nested Dynamical Structuring**
-   - Life is characterized by "nested dynamical heterarchical structuring."
-   - Indicates a complex organization with multiple levels of interaction.
-
-8. **Autonomy and Behavior**
-   - Life exhibits "autonomous and other rich behaviors."
-   - Suggests that self-directed action and adaptability are key to life.
-
-## Connection Map
-"These themes connect in the following ways:"
-1. **Dynamic Patterns and Observer-Environment Coupling**
-   - The dynamic patterns of life are discerned through the observer's interaction with the environment.
-   - This relationship underscores the contextual and relational nature of life.
-
-2. **Recursive Dynamics and Resonance**
-   - Recursive dynamics drive the rhythmic patterns and resonance that generate life's harmonic structures.
-   - Feedback loops and self-organization are central to sustaining these patterns.
-
-3. **Eurhythmicity and Material Expression**
-   - Eurhythmicity ensures the harmonious balance of patterns, which is expressed materially through energy and matter flows.
-   - This connection ties abstract patterns to their physical manifestations.
-
-4. **Nested Structuring and Autonomy**
-   - The nested, heterarchical structure of life supports its autonomy and diverse behaviors.
-   - This organization allows for both stability and adaptability.
-
-5. **Resonance and Replication**
-   - Resonance not only sustains patterns but also enables their replication, a key aspect of life's persistence.
-
-## Shared Approach
-"The definitions share these characteristics:"
-1. **Relational Perspective**
-   - Life is not defined in isolation but through its interaction with the environment and the observer.
-
-2. **Focus on Dynamics**
-   - Emphasis on processes, patterns, and changes rather than static properties.
-
-3. **Complex Systems Thinking**
-   - Life is described as a complex, nested system with multiple levels of organization and interaction.
-
-4. **Integration of Abstract and Material**
-   - Combines abstract concepts (e.g., resonance, eurhythmicity) with physical processes (e.g., energy and matter flows).
-
-5. **Emphasis on Persistence and Adaptability**
-   - Life is characterized by its ability to persist through dynamic processes and adapt to changes.
-
-6. **Holistic Framework**
-   - The definition integrates multiple perspectives, including physical, relational, and systemic, to provide a comprehensive view of life.
+1. **Common Methods**
+   - Both use computational and systems-based frameworks to define life.
+   - They emphasize processes (self-organization, adaptation) over static traits.
+
+2. **Similar Assumptions**
+   - Life is not limited to biological or carbon-based systems.
+   - Life is fundamentally about information processing and dynamic stability.
+
+3. **Shared Boundaries**
+   - Life is defined broadly to include non-physical systems, such as computational or digital environments.
+   - The definitions exclude static, non-adaptive systems from being considered alive.
+
+4. **Collective Focus**
+   - Both focus on life as a dynamic, evolving process rather than a fixed state.
+   - They prioritize the mechanisms (computation, adaptation) that sustain and evolve life over its specific material composition.
 
 ---
 
@@ -756,107 +668,74 @@ Life is a persistent dynamic pattern characterized by recursive interactions wit
 
 ## MEMBERS
 
-* Paul C. W. Davies
+* Chris Adami
 
 ## CONSENSUS
 
-Life is a system that maintains its organization and functionality through the coupling of information networks to chemical networks, enabling the regulation of energy and matter in a manner that sustains complexity and resists entropy, operating under principles that extend beyond locally-defined physical laws.
+Life is information encoded in a physical substrate that can replicate itself and persist by maintaining low entropy and resisting natural decay over timescales far exceeding the substrate's natural degradation, thereby sustaining order and continuity.
 
 ## ANALYSIS
 
-# Definition Theme Analysis Protocol
+### Key Themes List
+"These definitions share 3 major themes:"
 
-## Definitions
-1. **Schrodinger's "new kind of physical law"**: A yet-to-be-discovered principle governing living matter, distinct from traditional physical laws.
-2. **Causal efficacy of information**: The idea that information, as a physical quantity, has the ability to influence and drive processes in living systems.
-3. **Maxwell demonics**: The concept that life operates by exploiting small-scale thermodynamic margins, akin to Maxwell's demon, but extends beyond this to a more complex interplay of information and energy.
-4. **Landauer's principle**: The assertion that information is physical and has measurable, causal consequences in physical systems.
-5. **Coupling of information and chemical networks**: The unique feature of living matter where information-processing systems are integrated with chemical processes, leading to emergent complexity.
-6. **Global measure of complexity**: A potential characteristic of the new law, emphasizing holistic, system-wide properties rather than locally-defined quantities.
+1. **Information**
+   - Both definitions emphasize the central role of information in defining life.
+   - The first definition explicitly states that life is "information that can replicate itself."
+   - The second definition describes life as involving "information coded in a physical substrate."
+   - Importance: Information is presented as the foundational element of life, enabling replication and organization.
+   - Usage: It is the defining characteristic that distinguishes life from non-life.
 
----
+2. **Replication and Persistence**
+   - Both definitions highlight the ability of life to persist over time.
+   - The first definition directly ties life to the ability to "replicate itself."
+   - The second definition focuses on maintaining low entropy and preserving information over timescales far exceeding natural decay.
+   - Importance: Replication and persistence are essential for the continuity of life.
+   - Usage: These features are framed as mechanisms for survival and stability.
 
-## Analysis Steps
-
-### 1. WHAT Are The Core Ideas?
-- **Key Concepts**:
-  - New physical law for living matter
-  - Causal role of information
-  - Maxwell demonics and thermodynamic margins
-  - Information as a physical quantity (Landauer)
-  - Integration of information and chemical networks
-  - Global complexity measures
-- **Frequency**:
-  - All definitions emphasize a "new kind of law" (6/6).
-  - Information's causal role appears in 5/6.
-  - Coupling of networks and complexity measures are central to 4/6.
-- **Always Present**:
-  - The notion of a "new law" specific to life.
-  - The causal and physical nature of information.
+3. **Entropy and Order**
+   - The second definition introduces the concept of entropy, emphasizing life’s ability to maintain order in the face of natural decay and noise.
+   - The first definition implies order through the structured replication of information.
+   - Importance: Life is characterized by its ability to resist entropy, maintaining organization and functionality.
+   - Usage: This theme connects life to physical laws and thermodynamics.
 
 ---
 
-### 2. HOW Do Ideas Connect?
-- **Central Hub Concepts**:
-  - **New physical law**: The unifying idea that ties all other concepts together.
-  - **Information's causal efficacy**: A key mechanism proposed to underlie the new law.
-- **Connections**:
-  - Maxwell demonics → Information's causal role: Life exploits thermodynamic margins through information-driven processes.
-  - Information → Chemical networks: Living systems uniquely couple these domains.
-  - Global complexity → New law: The law would describe emergent, system-wide properties rather than local interactions.
-- **Patterns**:
-  - Hierarchical structure: Information is foundational, influencing chemical networks, which in turn drive global complexity.
-  - Emergence: The law is expected to describe how local interactions give rise to global properties.
-
----
-
-### 3. WHY This Structure?
-- **Common Approaches**:
-  - Focus on information as a bridge between physics and biology.
-  - Emphasis on emergent, system-level properties.
-- **Shared Frameworks**:
-  - Thermodynamics (Maxwell demonics, second law) as a starting point.
-  - Landauer's principle as a foundation for the physicality of information.
-- **Reasoning Patterns**:
-  - Deduction from known principles (thermodynamics, information theory) to hypothesize new laws.
-  - Integration of physical and biological perspectives.
-- **Scope Boundaries**:
-  - Definitions focus on living matter, excluding non-living systems.
-  - The law is expected to apply globally, not locally.
-- **Definitional Strategies**:
-  - Use of analogies (e.g., Maxwell demons) to frame novel ideas.
-  - Highlighting gaps in current understanding to motivate the search for new principles.
-
----
-
-## Output Format
-
-### 1. Key Themes List
-"These definitions share 6 major themes:"
-  - **New physical law**: Present in all definitions, central to explaining living matter.
-  - **Causal efficacy of information**: Highlighted as a key mechanism, linking information to physical processes.
-  - **Maxwell demonics**: Used as an analogy for life's thermodynamic strategies, but transcended by the proposed law.
-  - **Information as physical**: Grounded in Landauer's principle, emphasizing measurable consequences.
-  - **Coupling of networks**: Unique to living systems, integrating information and chemistry.
-  - **Global complexity**: A defining feature of the new law, focusing on emergent, system-wide properties.
-
----
-
-### 2. Connection Map
+### Connection Map
 "These themes connect in the following ways:"
-  - **New physical law** is the central hub, integrating all other themes.
-  - **Information's causal role** drives the coupling of networks and global complexity.
-  - **Maxwell demonics** illustrates how life exploits thermodynamics, but the new law extends beyond this.
-  - **Global complexity** emerges from the interplay of information and chemical networks.
+
+1. **Information ↔ Replication and Persistence**
+   - Information is the basis for replication, allowing life to persist over time.
+   - Replication ensures that the information defining life is passed on, enabling continuity.
+
+2. **Information ↔ Entropy and Order**
+   - Information is encoded in a physical substrate that resists entropy, maintaining order.
+   - Life’s ability to preserve and utilize information is tied to its capacity to manage entropy.
+
+3. **Replication and Persistence ↔ Entropy and Order**
+   - Replication ensures that life maintains low entropy by continually renewing its structure.
+   - Persistence over long timescales is possible because life counteracts natural decay and disorder.
 
 ---
 
-### 3. Shared Approach
+### Shared Approach
 "The definitions share these characteristics:"
-  - **Common methods**: Use of thermodynamic and information-theoretic principles.
-  - **Similar assumptions**: Information is physical and causally effective; life involves emergent complexity.
-  - **Shared boundaries**: Focus on living systems and global, not local, properties.
-  - **Collective focus**: Bridging physics and biology to uncover a unifying principle for life.
+
+1. **Common Methods**
+   - Both definitions use a scientific and systems-based approach, focusing on physical and informational properties.
+   - They emphasize measurable and observable phenomena, such as entropy, replication, and information coding.
+
+2. **Similar Assumptions**
+   - Life is fundamentally tied to information and its management.
+   - Physical laws, such as entropy, are central to understanding life.
+
+3. **Shared Boundaries**
+   - Life is defined within the context of physical systems and substrates.
+   - The definitions exclude phenomena that do not involve information, replication, or order maintenance.
+
+4. **Collective Focus**
+   - Both definitions aim to capture the essence of life in terms of universal principles, rather than specific biological forms.
+   - They focus on the processes and properties that sustain life, rather than its manifestations.
 
 ---
 
@@ -864,111 +743,67 @@ Life is a system that maintains its organization and functionality through the c
 
 ## MEMBERS
 
-* Chris Adami
+* David Ackley
 
 ## CONSENSUS
 
-Life is a property of systems capable of self-replication and maintaining information encoded in a physical substrate, sustaining significantly lower entropy than the maximum possible for the system over timescales far exceeding the natural decay of the substrate.
+Life is a systematic machine that operates to preserve and sustain patterns, emphasizing functional processes and the continuity of organization over physical composition.
 
 ## ANALYSIS
 
-# Definition Theme Analysis Protocol
-
-## Purpose
-Analyze the provided definitions of life to understand:
-- What core ideas they share
-- How these ideas connect
-- Why they structure definitions this way
-- What assumptions underlie their thinking
-
-## Analysis Steps
-
-### 1. WHAT Are The Core Ideas?
-
-#### Key Concepts:
-- **Information**: Both definitions emphasize the role of information as central to life.
-- **Replication**: The ability to replicate or reproduce is highlighted in the first definition.
-- **Physical substrate**: The second definition specifies that information is encoded in a physical medium.
-- **Entropy**: The second definition introduces the concept of entropy and the ability of life to maintain low entropy.
-- **Noise**: The second definition acknowledges the presence of noise in the system.
-- **Timescales**: The second definition emphasizes the durability of life over extended timescales compared to natural decay.
-
-#### Frequency and Grouping:
-- **Information** appears in both definitions and is a central theme.
-- **Replication** is explicitly mentioned in the first definition but is implied in the second (as maintaining information over time requires replication).
-- **Entropy** and **timescales** are unique to the second definition but are conceptually linked to the persistence and organization of life.
-- **Physical substrate** and **noise** are unique to the second definition but provide a framework for understanding how life operates in a physical and imperfect world.
-
-#### Always Present:
-- **Information** is the only concept explicitly present in both definitions.
-
----
-
-### 2. HOW Do Ideas Connect?
-
-#### Concept Relationships:
-- **Information and replication**: Replication is a mechanism by which information is preserved and propagated.
-- **Information and entropy**: Maintaining low entropy is a way to preserve the integrity of information over time.
-- **Physical substrate and noise**: The physical substrate is subject to noise, making the preservation of information a challenge.
-- **Timescales and entropy**: The ability to maintain low entropy over long timescales is a defining characteristic of life.
-
-#### Hierarchies and Central Concepts:
-- **Information** is the central hub concept, with other ideas (replication, entropy, physical substrate, noise, timescales) branching out as mechanisms or conditions for its persistence.
-- **Replication** and **entropy management** are subordinate processes that support the overarching goal of preserving information.
-
-#### Patterns:
-- Both definitions describe life as a system that actively resists natural decay (entropy) through mechanisms like replication and organization.
-- The second definition adds more detail about the physical and temporal constraints within which life operates.
-
----
-
-### 3. WHY This Structure?
-
-#### Common Approaches:
-- Both definitions adopt a systems-based perspective, focusing on the flow and preservation of information.
-- Both emphasize the dynamic nature of life, requiring active processes (e.g., replication, entropy management) to sustain itself.
-
-#### Shared Frameworks:
-- Both definitions are grounded in thermodynamics and information theory, viewing life as a system that operates far from equilibrium.
-- Both assume that life is fundamentally about the preservation and propagation of information.
-
-#### Reasoning Patterns:
-- The first definition is concise and focuses on the core idea of information replication.
-- The second definition expands on this by introducing physical and thermodynamic constraints, offering a more detailed explanation of how life operates.
-
-#### Scope Boundaries:
-- The first definition is broader and more abstract, applicable to a wide range of systems.
-- The second definition is more specific, narrowing the scope to systems that manage entropy and persist over long timescales.
-
-#### Definitional Strategies:
-- The first definition uses simplicity and abstraction to capture the essence of life.
-- The second definition uses complexity and specificity to provide a detailed mechanistic understanding.
-
----
-
-## Output Format
-
-### 1. Key Themes List
+### Key Themes List
 "These definitions share X major themes:"
-- **Information**: Present in both definitions, it is the central concept of life. Life is fundamentally about the storage, preservation, and propagation of information.
-- **Replication**: Highlighted in the first definition and implied in the second, replication is a mechanism for preserving information.
-- **Entropy management**: Introduced in the second definition, it describes how life resists natural decay to maintain order.
-- **Physical substrate**: The second definition emphasizes that life operates within a physical medium, which is subject to noise and decay.
-- **Timescales**: The second definition highlights the importance of life persisting over extended periods.
+1. **Machine**  
+   - Present in the definition as the primary analogy for life.  
+   - Important because it frames life as a functional system, emphasizing mechanisms and processes.  
+   - Used to suggest that life operates systematically, like a machine with specific purposes or goals.
 
-### 2. Connection Map
+2. **Preservation**  
+   - Central to the definition, highlighting the idea of maintaining or continuing something over time.  
+   - Important because it implies that life’s primary function is self-sustenance and continuity.  
+   - Used to define life’s purpose or goal as the act of maintaining its own existence.
+
+3. **Patterns**  
+   - Key concept that life is defined by the preservation of certain structures, forms, or behaviors.  
+   - Important because it shifts the focus from physical matter to the organization or arrangement of that matter.  
+   - Used to emphasize that life is not about what it is made of, but how it is organized and sustained.
+
+### Connection Map
 "These themes connect in the following ways:"
-- **Information ↔ Replication**: Replication is a process that ensures the continuity of information.
-- **Information ↔ Entropy management**: Life maintains low entropy to preserve the integrity of information.
-- **Physical substrate ↔ Noise**: The physical medium for information is imperfect, requiring mechanisms to counteract noise.
-- **Entropy management ↔ Timescales**: The ability to manage entropy allows life to persist over long timescales.
+- **Machine and Preservation**  
+  - The concept of a machine implies functionality, and preservation is framed as the machine's primary function.  
+  - They relate because the machine (life) is designed or operates to achieve the goal of preservation.  
+  - This connection suggests that life is fundamentally goal-oriented and process-driven.
 
-### 3. Shared Approach
+- **Preservation and Patterns**  
+  - Preservation is specifically tied to the maintenance of patterns, not just physical structures.  
+  - They relate because the definition focuses on the continuity of organization or form, rather than the material itself.  
+  - This connection highlights the abstract, informational nature of life.
+
+- **Machine and Patterns**  
+  - The machine analogy implies that patterns are the "output" or "product" that the machine works to maintain.  
+  - They relate because the machine (life) is described as operating to sustain these patterns.  
+  - This connection underscores the idea that life is a dynamic process, not a static entity.
+
+### Shared Approach
 "The definitions share these characteristics:"
-- **Common methods**: Both use a systems-based approach to describe life.
-- **Similar assumptions**: Both assume that life is fundamentally about information and its preservation.
-- **Shared boundaries**: Both definitions focus on the dynamic, non-equilibrium nature of life.
-- **Collective focus**: Both emphasize the active processes (replication, entropy management) that sustain life.
+- **Functional Perspective**  
+  - Life is defined by what it does (preserves patterns), not what it is made of.  
+  - Assumes that processes and functions are more fundamental to life than physical composition.
+
+- **Abstract Focus**  
+  - Emphasizes patterns and organization over material substance.  
+  - Suggests that life is more about information and structure than physicality.
+
+- **Systematic Framing**  
+  - Uses the machine analogy to frame life as a system with a specific purpose or goal.  
+  - Assumes that life operates systematically, with interconnected processes working toward preservation.
+
+- **Goal-Oriented Definition**  
+  - Life is defined by its purpose (preservation of patterns), implying intentionality or directionality in its processes.  
+  - Assumes that life inherently works toward maintaining its existence.
+
+This definition reflects a mechanistic, process-oriented view of life, emphasizing function, continuity, and the abstract nature of patterns over material composition.
 
 ---
 
@@ -976,94 +811,97 @@ Analyze the provided definitions of life to understand:
 
 ## MEMBERS
 
-* Joshua Bongard
+* Paul C. W. Davies
 
 ## CONSENSUS
 
-Life is a self-sustaining system capable of growth, adaptation, and reproduction, characterized by the ability to process and transmit information through dynamic, multivariate interactions across diverse energetic and physical modalities.
+Life is a unique physical phenomenon governed by a new kind of physical law that grants causal efficacy to information, coupling it with chemical networks to drive processes and maintain order. This law operates on a global scale of complexity, transcending traditional, locally-defined physical laws, and reflects the non-local organization of living systems, which exploit the margins of thermodynamics to navigate energy and entropy constraints.
 
 ## ANALYSIS
 
-# Definition Theme Analysis
+### Key Themes List
 
-## Input Definition
-"Information flows are discovered that are initially restricted to narrow spatial and temporal ranges, are univariate (one point source), and the carriers of information are restricted to a few energetic and physical modalities (electricity; vibration). Over time, these flows are found to multiply; expand across space and time; become multivariate and higher-order; and be carried by additional energetic and physical modalities (quantum; plasma)."
+"These definitions share 5 major themes:"
 
----
+1. **Causal Efficacy of Information**
+   - Present in: All definitions
+   - Importance: Central to the idea that information is not merely abstract but has real, physical consequences in living systems.
+   - Usage: Suggests that information plays an active, causal role in driving processes in living matter, beyond the traditional thermodynamic framework.
 
-## Analysis Steps
+2. **Maxwell Demons and Thermodynamics**
+   - Present in: All definitions
+   - Importance: Highlights the interplay between life and the second law of thermodynamics, with life exploiting "margins" or loopholes in entropy increase.
+   - Usage: Frames living systems as entities that manipulate energy and entropy through information processing.
 
-### 1. WHAT Are The Core Ideas?
-Key concepts from the definition:
-- **Information flows**: Central idea, referring to the movement or transmission of information.
-- **Initial restriction**: Flows are initially limited in spatial, temporal, and modal dimensions.
-- **Univariate (one point source)**: Early flows are singular in origin or dimension.
-- **Energetic and physical modalities**: Information is carried through specific mediums (e.g., electricity, vibration).
-- **Expansion over time**: Flows evolve to cover broader spatial and temporal ranges.
-- **Multivariate and higher-order**: Flows become more complex, involving multiple variables or dimensions.
-- **Additional modalities**: New carriers (e.g., quantum, plasma) emerge as flows evolve.
+3. **Coupling of Information and Chemical Networks**
+   - Present in: All definitions
+   - Importance: Emphasizes the integration of informational and material (chemical) processes as a hallmark of living systems.
+   - Usage: Suggests that life operates through a tight coupling of abstract (informational) and physical (chemical) domains.
 
-Frequency and importance:
-- The evolution of **information flows** is the central theme.
-- The transition from **simple (univariate)** to **complex (multivariate)** systems is emphasized.
-- The role of **modalities** (e.g., electricity, vibration, quantum, plasma) is critical in describing how information is carried.
+4. **Global Measure of Complexity**
+   - Present in: All definitions
+   - Importance: Proposes that the new law governing life would involve a holistic, system-wide measure of complexity, rather than localized quantities.
+   - Usage: Positions complexity as a defining feature of living systems, requiring a global perspective to understand.
 
----
-
-### 2. HOW Do Ideas Connect?
-Concept relationships:
-- **Information flows** are the overarching concept, connecting all other ideas.
-- **Initial restriction** sets the starting condition, linking to the idea of **expansion over time**.
-- **Univariate flows** evolve into **multivariate and higher-order flows**, showing a progression in complexity.
-- **Energetic and physical modalities** are the mechanisms enabling the transmission of information, which diversify as flows expand.
-
-Patterns:
-- A clear temporal progression is described: from simple, localized, and constrained flows to complex, expansive, and diverse systems.
-- Modalities act as enablers of this evolution, with new modalities emerging as flows grow in complexity.
+5. **A 'New Kind' of Physical Law**
+   - Present in: All definitions
+   - Importance: Indicates that the laws governing living matter differ fundamentally from traditional physical laws, particularly in their non-locality and focus on complexity.
+   - Usage: Frames the search for this law as a quest to uncover principles that transcend classical physics and thermodynamics.
 
 ---
 
-### 3. WHY This Structure?
-Shared reasoning:
-- The definition emphasizes **evolution** and **progression**, reflecting a dynamic view of information systems.
-- It assumes that **information flows naturally grow** in complexity and reach over time.
-- The structure highlights a **hierarchical framework**, starting with basic flows and building toward more sophisticated systems.
-- The inclusion of **energetic and physical modalities** suggests an interdisciplinary approach, combining physics, information theory, and systems thinking.
+### Connection Map
 
-Definitional strategies:
-- The definition uses a **temporal narrative** to explain the concept's development.
-- It incorporates **examples of modalities** (electricity, vibration, quantum, plasma) to ground abstract ideas in concrete terms.
-- The focus on **progression** and **diversity** provides a broad scope, accommodating multiple domains of application.
-
----
-
-## Output
-
-### 1. Key Themes List
-"These definitions share X major themes:"
-- **Information flows**: Central idea; all aspects of the definition revolve around this concept.
-- **Evolution of complexity**: The transition from simple to complex flows is a core theme.
-- **Modalities as carriers**: Specific energetic and physical mechanisms (e.g., electricity, quantum) are essential for transmitting information.
-- **Temporal and spatial expansion**: Growth across time and space is a recurring idea.
-
-### 2. Connection Map
 "These themes connect in the following ways:"
-- **Information flows** are the central hub, linking all other ideas.
-- **Initial restriction** → **Expansion over time**: A progression from simplicity to complexity.
-- **Univariate** → **Multivariate**: A shift from singular to multidimensional flows.
-- **Modalities** enable the transmission and evolution of flows, diversifying as complexity increases.
-- **Temporal narrative** ties all elements together, showing a clear developmental path.
 
-### 3. Shared Approach
-"The definitions share these characteristics:"
-- **Dynamic progression**: Emphasis on growth and evolution over time.
-- **Interdisciplinary focus**: Integration of physical, energetic, and informational perspectives.
-- **Hierarchical structure**: Starting with basic flows and building toward complex systems.
-- **Concrete examples**: Use of specific modalities (electricity, vibration, quantum, plasma) to illustrate abstract concepts.
+1. **Information and Thermodynamics**
+   - Connection: The causal efficacy of information is linked to Maxwell demon-like behavior, where information processing allows living systems to locally reduce entropy.
+   - Relationship: Information serves as a tool for life to navigate and exploit thermodynamic constraints.
+   - Pattern: Life is seen as a system that uses information to manipulate energy flows and maintain order.
+
+2. **Information and Chemical Networks**
+   - Connection: Information networks are coupled with chemical networks, enabling life to translate abstract information into physical, chemical action.
+   - Relationship: This coupling is what allows information to have causal efficacy in the material world.
+   - Pattern: Living systems are hybrid entities where information and matter are deeply intertwined.
+
+3. **Complexity and Non-Locality**
+   - Connection: The global measure of complexity ties directly to the idea of a 'new kind' of physical law, which would operate on a system-wide scale rather than through local interactions.
+   - Relationship: Complexity is both a product of and a requirement for the non-local, integrated behavior of living systems.
+   - Pattern: The defining characteristics of life emerge from its global, non-local organization.
+
+4. **Thermodynamics and Complexity**
+   - Connection: Maxwell demon-like behavior and the coupling of information and chemical networks contribute to the global complexity of living systems.
+   - Relationship: Life's ability to "play the margins" of the second law of thermodynamics is a key driver of its complexity.
+   - Pattern: Complexity arises as a result of life’s strategies for managing energy and information.
 
 ---
 
-This analysis highlights the dynamic, interdisciplinary, and hierarchical nature of the definition, emphasizing its focus on the evolution of information flows and the role of modalities in enabling this progression.
+### Shared Approach
+
+"The definitions share these characteristics:"
+
+1. **Common Methods**
+   - Focus on integrating concepts from physics (thermodynamics, information theory) and biology (complexity, networks).
+   - Use of interdisciplinary frameworks to approach the problem.
+
+2. **Similar Assumptions**
+   - Information is physical and has causal power.
+   - Living systems are fundamentally different from non-living systems due to their coupling of information and matter.
+   - Complexity is a defining feature of life.
+
+3. **Shared Boundaries**
+   - The 'new law' is not yet defined but is expected to transcend traditional physical laws.
+   - Emphasis on non-local, system-wide properties rather than localized phenomena.
+
+4. **Collective Focus**
+   - Understanding life as a unique physical phenomenon that requires new principles.
+   - Bridging the gap between information theory, thermodynamics, and complexity science.
+
+---
+
+### Summary
+
+The definitions converge on the idea that living systems are governed by a 'new kind' of physical law that gives causal efficacy to information, integrates it with chemical processes, and operates on a global scale of complexity. This law would transcend traditional, locally-defined physical laws, reflecting the unique, non-local organization of life. The interplay between information, thermodynamics, and complexity is central to this framework, with life exploiting the margins of the second law to maintain order and drive its processes.
 
 ---
 
@@ -1071,119 +909,70 @@ This analysis highlights the dynamic, interdisciplinary, and hierarchical nature
 
 ## MEMBERS
 
-* Andy Adamatzky
+* Joshua Bongard
 
 ## CONSENSUS
 
-Life is a self-sustaining system capable of reproduction with heritable genetic variation.
+Life is the dynamic evolution of information flows, originating as simple, univariate systems constrained by narrow spatial and temporal ranges and limited energetic and physical modalities, which progressively expand, multiply, and diversify into complex, multivariate systems supported by an increasing variety of carriers across broader spatial and temporal scales.
 
 ## ANALYSIS
 
-# Definition Theme Analysis Protocol
+### Definition Theme Analysis
 
-## Definitions Provided:
-1. Reproduction is the biological process by which organisms create offspring, ensuring the continuation of their species, often accompanied by genetic mutations that introduce variation.
-2. Reproduction involves the creation of new individuals from parent organisms, with mutations arising as random changes in genetic material during this process.
-3. Reproduction is the mechanism by which life perpetuates itself, with mutations serving as a source of genetic diversity and evolutionary potential.
-4. Reproduction is the process of producing offspring, during which mutations may occur, contributing to genetic variability within populations.
-
----
-
-## Analysis Steps
-
-### 1. WHAT Are The Core Ideas?
-
-**Key Concepts Identified:**
-- Reproduction (4 mentions)
-- Biological process (2 mentions)
-- Creation of offspring/new individuals (4 mentions)
-- Continuation of species (1 mention)
-- Mutations (4 mentions)
-- Genetic material (2 mentions)
-- Genetic diversity/variation (2 mentions)
-- Evolutionary potential (1 mention)
-- Populations (1 mention)
-
-**Most Common Concepts:**
-- Reproduction (present in all definitions)
-- Creation of offspring (present in all definitions)
-- Mutations (present in all definitions)
-
-**Always Present Concepts:**
-- Reproduction
-- Mutations
-- Creation of offspring
-
----
-
-### 2. HOW Do Ideas Connect?
-
-**Concept Linkages:**
-- **Reproduction** is consistently linked to the **creation of offspring**, establishing it as the central purpose of the process.
-- **Mutations** are described as a natural part of reproduction, occurring during the transfer or replication of **genetic material**.
-- **Mutations** are further connected to **genetic diversity** and **evolutionary potential**, highlighting their role in broader biological processes.
-- The **continuation of species** and **populations** are outcomes tied to reproduction, with mutations contributing to the adaptability and survival of species.
-
-**Concept Hierarchies:**
-- Central Hub: Reproduction
-  - Directly linked to: Creation of offspring
-  - Indirectly linked to: Mutations → Genetic diversity → Evolutionary potential
-
-**Patterns Observed:**
-- Reproduction is consistently framed as a biological necessity.
-- Mutations are universally acknowledged as a secondary but integral component of reproduction.
-- The flow of ideas moves from the act of reproduction to its consequences (e.g., diversity, evolution).
-
----
-
-### 3. WHY This Structure?
-
-**Common Approaches:**
-- All definitions start with reproduction as the primary process, emphasizing its biological and functional role.
-- Mutations are introduced as a natural byproduct of reproduction, rather than a separate phenomenon.
-- The definitions focus on the dual purpose of reproduction: creating offspring and contributing to genetic variation.
-
-**Shared Frameworks:**
-- Evolutionary biology underpins all definitions, with an emphasis on how reproduction and mutations drive species survival and adaptability.
-- A cause-and-effect structure is used: reproduction causes offspring, mutations cause diversity.
-
-**Reasoning Patterns:**
-- Definitions highlight reproduction as essential for life’s continuity.
-- Mutations are framed positively, as contributors to diversity and evolution, rather than as errors or flaws.
-
-**Scope Boundaries:**
-- The definitions focus on biological reproduction, excluding other forms (e.g., technological or artificial reproduction).
-- The role of mutations is limited to their genetic and evolutionary impact.
-
-**Definitional Strategies:**
-- Use of concise, functional language.
-- Emphasis on biological and evolutionary significance.
-- Mutations are consistently framed as a secondary but essential aspect.
-
----
-
-## Output Summary
-
-### 1. Key Themes List
+#### 1. Key Themes List
 "These definitions share 4 major themes:"
-- **Reproduction** (4 mentions): The central biological process for creating offspring and ensuring species survival.
-- **Creation of Offspring** (4 mentions): The primary purpose of reproduction, universally included in all definitions.
-- **Mutations** (4 mentions): Random changes in genetic material that occur during reproduction, contributing to diversity.
-- **Genetic Diversity/Evolutionary Potential** (2 mentions): The broader impact of mutations, enabling adaptability and evolution.
+- **Information Flows**
+  - Present in all parts of the definition.
+  - Central to the concept, describing how information is transmitted and evolves.
+  - Used to frame the progression of complexity in communication systems.
+  
+- **Initial Simplicity**
+  - Found in the description of narrow spatial/temporal ranges, univariate sources, and limited modalities.
+  - Highlights the starting point of information systems as simple and constrained.
+  - Important for establishing a baseline for comparison with later complexity.
 
-### 2. Connection Map
+- **Progression and Expansion**
+  - Evident in the description of flows multiplying, expanding spatially and temporally, and becoming multivariate and higher-order.
+  - Demonstrates the dynamic nature of information systems and their capacity for growth.
+  - Used to illustrate the evolution of complexity over time.
+
+- **Diverse Modalities**
+  - Includes references to electricity, vibration, quantum, and plasma as carriers of information.
+  - Highlights the increasing diversity in the physical and energetic means of transmitting information.
+  - Important for showing how information systems adapt and integrate new technologies.
+
+#### 2. Connection Map
 "These themes connect in the following ways:"
-- **Reproduction → Creation of Offspring**: Reproduction is defined as the mechanism for producing new individuals.
-- **Reproduction → Mutations**: Mutations occur as part of the reproductive process, often during genetic material transfer.
-- **Mutations → Genetic Diversity/Evolutionary Potential**: Mutations introduce variability, which drives evolution and species adaptability.
-- **Reproduction → Continuation of Species**: The ultimate purpose of reproduction is species survival, supported by genetic diversity.
+- **Information Flows** serve as the central hub concept, linking all other themes.
+  - They begin as **Initial Simplicity**, characterized by narrow ranges and univariate sources.
+  - Over time, they undergo **Progression and Expansion**, becoming more complex and widespread.
+  - This evolution incorporates **Diverse Modalities**, as new physical and energetic carriers are introduced.
+- The flow is hierarchical:
+  - Simplicity → Expansion → Complexity → Modality Diversification.
+- The relationship between **Progression and Expansion** and **Diverse Modalities** is reciprocal:
+  - As flows expand, they require new modalities to sustain their growth.
+  - New modalities, in turn, enable further expansion and complexity.
 
-### 3. Shared Approach
+#### 3. Shared Approach
 "The definitions share these characteristics:"
-- **Common Methods**: All definitions use a biological framework, focusing on reproduction as a natural process.
-- **Similar Assumptions**: Reproduction is essential for life, and mutations are a natural and beneficial part of it.
-- **Shared Boundaries**: The focus is on biological reproduction and its genetic implications, excluding other contexts.
-- **Collective Focus**: Emphasis on the dual role of reproduction: producing offspring and enabling genetic variation for evolution.
+- **Dynamic Evolution**:
+  - All descriptions emphasize change over time, from simplicity to complexity.
+  - The focus is on processes rather than static states.
+  
+- **Hierarchical Structure**:
+  - Definitions are structured to show a clear progression from basic to advanced systems.
+  - This hierarchy reflects a developmental or evolutionary framework.
+
+- **Physical and Energetic Focus**:
+  - The definitions assume that information flows are tied to physical and energetic carriers.
+  - This reflects a materialist perspective on information transmission.
+
+- **Temporal and Spatial Context**:
+  - The definitions consistently frame information flows within specific spatial and temporal ranges.
+  - This contextualization underscores the importance of scale in understanding information systems.
+
+### Summary
+The definitions collectively describe the evolution of information flows, starting from simple, constrained systems and progressing to complex, multivariate, and diverse modalities. The shared focus on physical carriers and dynamic progression highlights a materialist and developmental approach to understanding information systems. The connections between themes reveal a hierarchical and reciprocal relationship, emphasizing the interplay between complexity and modality diversification.
 
 ---
 
@@ -1191,72 +980,15 @@ Life is a self-sustaining system capable of reproduction with heritable genetic 
 
 ## MEMBERS
 
-* Anna Ciaunica
+* Andy Adamatzky
 
 ## CONSENSUS
 
-Life is the continuous interaction and exchange between internal and external systems, inherently dependent on the existence of other living entities.
+Life is the capacity for reproduction with the potential for genetic mutations.
 
 ## ANALYSIS
 
-## Definition Theme Analysis
-
-### 1. Key Themes List
-"These definitions share 4 major themes:"
-- **Movement and Balance**
-  - Present in the idea of "permanent movement" and "balanced exchange."
-  - Highlights the dynamic, ongoing process of life.
-  - Suggests life is not static but requires continuous interaction.
-  
-- **Interdependence**
-  - Life is described as something that "cannot exist without an other."
-  - Emphasizes the relational nature of life, relying on external factors or beings.
-  - Suggests a fundamental interconnectedness between living entities.
-
-- **Life as Received, Not Created**
-  - Life is framed as a "gift" that we "have received."
-  - Indicates life is not a human-made construct but something inherent or given.
-  - Suggests a sense of humility or gratitude in the understanding of life.
-
-- **Existence Beyond Human Control**
-  - Life is "not something we can create or make."
-  - Positions life as transcendent or beyond human power.
-  - Implies a philosophical or spiritual dimension to the concept.
-
-### 2. Connection Map
-"These themes connect in the following ways:"
-- **Movement and Interdependence**:
-  - The idea of "balanced exchange" inherently requires interaction with "an other."
-  - Movement is both internal and external, linking the self with the outside world.
-  
-- **Life as a Gift and Interdependence**:
-  - The notion of life being "received" aligns with the idea that it depends on something external ("an other").
-  - Both themes emphasize that life is not self-contained but relational.
-
-- **Existence Beyond Control and Life as a Gift**:
-  - The idea that life "cannot be created or made" reinforces the concept of life as something given, not manufactured.
-  - Both suggest life has a source or origin beyond human agency.
-
-### 3. Shared Approach
-"The definitions share these characteristics:"
-- **Philosophical/Spiritual Framing**:
-  - Life is described in abstract, relational, and transcendent terms rather than biological or mechanistic.
-  - The use of terms like "gift" and "received" suggests a spiritual or existential perspective.
-
-- **Relational Focus**:
-  - Life is understood as inherently tied to interaction and exchange with others or the environment.
-  - This relational focus moves away from individualism to emphasize interconnectedness.
-
-- **Dynamic Process**:
-  - Life is not static but involves movement, exchange, and balance.
-  - This approach highlights the ongoing nature of living rather than a fixed state.
-
-- **Humility and Gratitude**:
-  - The framing of life as a gift suggests a humble acknowledgment of life’s origins and a sense of gratitude.
-  - This contrasts with definitions that might focus on control or mastery over life.
-
-### Summary
-This definition of life emphasizes its dynamic, relational, and transcendent nature. It portrays life as a gift that exists through interaction and balance, beyond human creation or control. The shared approach reflects a philosophical and spiritual lens, focusing on humility, interdependence, and the ongoing process of living.
+It seems like you're asking for an analysis of definitions related to "reproduction with mutations." Could you clarify if you have multiple definitions you'd like analyzed, or are you asking for a general explanation of the concept? If you provide definitions, I can apply the Definition Theme Analysis Protocol to them. Let me know!
 
 ---
 

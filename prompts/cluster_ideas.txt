@@ -3,8 +3,7 @@
 ## Purpose
 Extract and analyze high-level patterns across multiple definitions to reveal conceptual relationships, shared frameworks, and common intellectual approaches. This meta-analysis aims to understand how experts construct their definitions and what underlying assumptions they share.
 
-## Definitions
-{definitions}
+You will be provided with the definitions in the user's question.
 
 # Definition Theme Analysis Protocol
 

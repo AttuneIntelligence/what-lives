@@ -16,13 +16,14 @@ from scipy.spatial.distance import squareform
 import seaborn as sns
 import textwrap
 from collections import defaultdict
+import datetime
 
 # nest_asyncio.apply()
 
 from .inference import Inference
 
 class WhatLives:
-    def __init__(self, inference=None, model=None, n_max=None):
+    def __init__(self, inference=None, model=None, n_max=None, semaphore_limit=33, n_replicates=6):
         ### LOAD INFERENCE CLASS FOR LANGUAGE QUERY
         if not inference:
             self.Inference = Inference()
@@ -30,10 +31,10 @@ class WhatLives:
             self.Inference = inference
 
         ### CONCURRENCY LIMIT
-        self.semaphore_limit = 99
+        self.semaphore_limit = semaphore_limit
         
         ### CORRELATION MATRIX HYPERPARAMETERS
-        self.n_replicates = 6
+        self.n_replicates = n_replicates
         
         ### SOURCE XLSX INGRESS
         self.n_max = n_max   # allow for subset of definitions to be analyzed, or `None`
@@ -136,16 +137,52 @@ class WhatLives:
         total_cost = sum(costs)
         return average_score, std_score, total_cost
 
-    async def async_define_correlation_matrix(self):
-        ### INITIALIZE NULL MATRICES
+    async def async_define_correlation_matrix(self, checkpoint_freq=100, resume_from_checkpoint=True):
+        ### CREATE PROGRESS FILES FOR CHECKPOINT SAVING
+        checkpoint_path = os.path.join(self.output_dir, f"correlation_checkpoint_{self.model}.npz")
+        progress_path = os.path.join(self.output_dir, f"correlation_progress_{self.model}.json")
+
+        # Get total number of definitions
         n = len(self.definitions)
+
+        # Initialize matrices and progress tracking
         M = np.zeros((n, n))  # For average correlations
         S = np.zeros((n, n))  # For standard deviations
         costs = []
 
-        ### CONCURRENT PAIRWISE METRIC GENERATION
-        print("Computing correlation matrices...")
+        # Track which pairs have been computed
+        computed_pairs = set()
+
+        # Check if checkpoint exists and load if requested
+        if os.path.exists(checkpoint_path) and resume_from_checkpoint:
+            print(f"Loading checkpoint from {checkpoint_path}")
+            checkpoint = np.load(checkpoint_path)
+            M = checkpoint['correlation_matrix']
+            S = checkpoint['std_matrix']
+
+            if os.path.exists(progress_path):
+                with open(progress_path, 'r') as f:
+                    checkpoint_data = json.load(f)
+                    costs = checkpoint_data.get('costs', [])
+                    computed_pairs = set(tuple(pair) for pair in checkpoint_data.get('computed_pairs', []))
+
+            print(f"Resumed with {len(computed_pairs)} pairs already computed")
+
+        # Create list of all pairs to compute
+        all_pairs = [(i, j) for i in range(n) for j in range(n)]
+
+        # Filter out already computed pairs
+        remaining_pairs = [(i, j) for i, j in all_pairs if (i, j) not in computed_pairs]
+
+        if len(remaining_pairs) == 0:
+            print("All correlations already computed. Returning checkpoint data.")
+            return M, S
+
+        print(f"Computing {len(remaining_pairs)} remaining correlation pairs...")
+
+        # Set up semaphore for concurrency control
         semaphore = asyncio.Semaphore(self.semaphore_limit)
+
         async def process_pair(i, j):
             async with semaphore:
                 avg, std, cost = await self.definition_correlation(
@@ -154,18 +191,69 @@ class WhatLives:
                 )
                 return i, j, avg, std, cost
 
-        tasks = []
-        for i in range(n):
-            for j in range(n):
-                tasks.append(process_pair(i, j))
+        # Process remaining pairs with checkpointing
+        tasks = [process_pair(i, j) for i, j in remaining_pairs]
 
+        # Track how many pairs have been processed since last checkpoint
+        pairs_since_checkpoint = 0
+        checkpoint_counter = 0
+
+        # Process all tasks with progress tracking
         for task in tqdm(asyncio.as_completed(tasks), total=len(tasks)):
             i, j, avg, std, cost = await task
+
+            # Update matrices
             M[i, j] = avg
             S[i, j] = std
             costs.append(cost)
 
-        ### SYMMETRIZE, PLOT, AND RETURN 
+            # Track this pair as computed
+            computed_pairs.add((i, j))
+
+            # Increment counter for checkpoint
+            pairs_since_checkpoint += 1
+
+            # Save checkpoint if needed
+            if pairs_since_checkpoint >= checkpoint_freq:
+                checkpoint_counter += 1
+                # print(f"\nSaving checkpoint {checkpoint_counter}...")
+
+                # Save matrix data
+                np.savez(
+                    checkpoint_path,
+                    correlation_matrix=M,
+                    std_matrix=S
+                )
+
+                # Save progress metadata
+                with open(progress_path, 'w') as f:
+                    json.dump({
+                        'costs': costs,
+                        'computed_pairs': list(map(list, computed_pairs)),
+                        'timestamp': str(datetime.datetime.now())
+                    }, f)
+
+                pairs_since_checkpoint = 0
+                # print(f"Checkpoint saved. Completed {len(computed_pairs)}/{len(all_pairs)} pairs.")
+
+        # Final checkpoint after all processing
+        print("Saving final results...")
+        np.savez(
+            checkpoint_path,
+            correlation_matrix=M,
+            std_matrix=S
+        )
+
+        # Save final progress metadata
+        with open(progress_path, 'w') as f:
+            json.dump({
+                'costs': costs,
+                'computed_pairs': list(map(list, computed_pairs)),
+                'timestamp': str(datetime.datetime.now()),
+                'completed': True
+            }, f)
+
+        # Symmetrize, plot, and return
         self.plot_correlation_matrix(M, title=f'Definition Correlations - {self.model} - Raw')
         self.plot_correlation_matrix(S, title=f'Definition Correlations Standard Deviation - {self.model} - Raw', 
                                    is_std=True)
@@ -180,7 +268,158 @@ class WhatLives:
         total_cost = sum(costs)
         print("--- COMPLETE ---")
         print(f"total cost: ${total_cost:.2f}")
+
+        # Save the final matrices to their standard locations
+        self.save_correlation_matrix(Ms, matrix_name=f'm_correlation_{self.model}')
+
         return Ms, Ss
+
+
+    def create_correlation_matrix(self, checkpoint_freq=100, resume_from_checkpoint=True):
+        M, S = asyncio.run(self.async_define_correlation_matrix(
+            checkpoint_freq=checkpoint_freq,
+            resume_from_checkpoint=resume_from_checkpoint
+        ))
+        
+        ### SAVE CORRELATION MATRIX TO FILE
+        self.save_correlation_matrix(M, matrix_name=f'm_correlation_{self.model}')
+        
+        return M, S
+    
+    ### CHECKPOINT MANAGEMENT ###
+    def get_correlation_status(self):
+        # Define paths for checkpoint files
+        checkpoint_path = os.path.join(self.output_dir, f"correlation_checkpoint_{self.model}.npz")
+        progress_path = os.path.join(self.output_dir, f"correlation_progress_{self.model}.json")
+
+        status = {
+            "checkpoint_exists": False,
+            "progress_exists": False,
+            "total_pairs": len(self.definitions) ** 2,
+            "computed_pairs": 0,
+            "completion_percentage": 0,
+            "total_cost": 0,
+            "avg_cost_per_pair": 0,
+            "estimated_remaining_cost": 0,
+            "last_updated": None
+        }
+
+        # Check if checkpoint exists
+        if os.path.exists(checkpoint_path):
+            status["checkpoint_exists"] = True
+
+            # Try to load the checkpoint to verify it's valid
+            try:
+                checkpoint = np.load(checkpoint_path)
+                status["matrix_shape"] = checkpoint['correlation_matrix'].shape
+            except Exception as e:
+                status["checkpoint_error"] = str(e)
+
+        # Check if progress file exists
+        if os.path.exists(progress_path):
+            status["progress_exists"] = True
+
+            try:
+                with open(progress_path, 'r') as f:
+                    progress_data = json.load(f)
+
+                status["computed_pairs"] = len(progress_data.get('computed_pairs', []))
+                status["completion_percentage"] = (status["computed_pairs"] / status["total_pairs"]) * 100
+                status["total_cost"] = sum(progress_data.get('costs', []))
+                status["last_updated"] = progress_data.get('timestamp', None)
+
+                if status["computed_pairs"] > 0:
+                    status["avg_cost_per_pair"] = status["total_cost"] / status["computed_pairs"]
+                    remaining_pairs = status["total_pairs"] - status["computed_pairs"]
+                    status["estimated_remaining_cost"] = status["avg_cost_per_pair"] * remaining_pairs
+
+                status["completed"] = progress_data.get('completed', False)
+
+            except Exception as e:
+                status["progress_error"] = str(e)
+
+        return status
+
+    def print_correlation_status(self):
+        status = self.get_correlation_status()
+
+        print(f"\n=== Correlation Matrix Status for {self.model} ===")
+
+        if not status["checkpoint_exists"] and not status["progress_exists"]:
+            print("No checkpoints found. Correlation matrix has not been started.")
+            print(f"Total pairs to compute: {status['total_pairs']}")
+            return
+
+        print(f"Completion: {status['completion_percentage']:.2f}% ({status['computed_pairs']}/{status['total_pairs']} pairs)")
+        print(f"Cost so far: ${status['total_cost']:.2f}")
+
+        if status["computed_pairs"] > 0:
+            print(f"Average cost per pair: ${status['avg_cost_per_pair']:.4f}")
+            print(f"Estimated remaining cost: ${status['estimated_remaining_cost']:.2f}")
+
+        if status.get("completed", False):
+            print("Status: COMPLETED")
+        else:
+            print("Status: IN PROGRESS")
+
+        if status["last_updated"]:
+            print(f"Last updated: {status['last_updated']}")
+
+        if "checkpoint_error" in status or "progress_error" in status:
+            print("\nWarnings:")
+            if "checkpoint_error" in status:
+                print(f"- Checkpoint file error: {status['checkpoint_error']}")
+            if "progress_error" in status:
+                print(f"- Progress file error: {status['progress_error']}")
+
+
+    def reset_correlation_calculation(self, confirmation=False):
+        # Define paths for checkpoint files
+        checkpoint_path = os.path.join(self.output_dir, f"correlation_checkpoint_{self.model}.npz")
+        progress_path = os.path.join(self.output_dir, f"correlation_progress_{self.model}.json")
+
+        # Check if files exist
+        files_exist = os.path.exists(checkpoint_path) or os.path.exists(progress_path)
+
+        if not files_exist:
+            print("No checkpoint files found. Nothing to reset.")
+            return False
+
+        # Get confirmation if needed
+        if not confirmation:
+            status = self.get_correlation_status()
+            print(f"\n=== Reset Correlation Matrix for {self.model} ===")
+            print(f"Completion: {status['completion_percentage']:.2f}% ({status['computed_pairs']}/{status['total_pairs']} pairs)")
+            print(f"Cost invested so far: ${status['total_cost']:.2f}")
+
+            confirm = input("\nThis will delete all progress. Type 'yes' to confirm: ")
+            if confirm.lower() != 'yes':
+                print("Reset cancelled.")
+                return False
+
+        # Delete files
+        files_deleted = []
+
+        if os.path.exists(checkpoint_path):
+            try:
+                os.remove(checkpoint_path)
+                files_deleted.append(checkpoint_path)
+            except Exception as e:
+                print(f"Error deleting checkpoint file: {e}")
+
+        if os.path.exists(progress_path):
+            try:
+                os.remove(progress_path)
+                files_deleted.append(progress_path)
+            except Exception as e:
+                print(f"Error deleting progress file: {e}")
+
+        if files_deleted:
+            print(f"Reset successful. Deleted: {', '.join(files_deleted)}")
+            return True
+        else:
+            print("Reset failed. No files were deleted.")
+            return False
 
     def plot_correlation_matrix(self, M, title='Definition Correlations', is_std=False):
         plt.figure(figsize=(11,9))
@@ -227,10 +466,20 @@ class WhatLives:
                     dpi=600, bbox_inches='tight')
         plt.show()    
     
-    def create_correlation_matrix(self):
-        M = asyncio.run(self.async_define_correlation_matrix())
-        # self.plot_correlation_matrix(M)
-        return M   
+#     def create_correlation_matrix(self):
+#         M, S = asyncio.run(self.async_define_correlation_matrix())
+#         # self.plot_correlation_matrix(M)
+        
+#         ### SAVE CORRELATION MATRIX TO FILE
+#         self.save_correlation_matrix(M, matrix_name=f'm_correlation_{self.model}')
+        
+#         return M, S  
+    
+    def save_correlation_matrix(self, matrix, matrix_name='correlation_matrix'):
+        file_path = os.path.join(self.output_dir, f"{matrix_name}.npy")
+        np.save(file_path, matrix)
+        print(f"Correlation matrix saved to {file_path}")
+        return file_path
     
     #########################################
     ### AGGLOMERATIVE CLUSTERING ANALYSIS ###
@@ -532,15 +781,15 @@ class WhatLives:
             
             ### a) GET CONSENSUS DEFINITION FOR CLUSTER
             consensus_template = self.Inference._read_prompt_template("cluster_consensus")
+            consensus_input_text = f"Here are the definitions:\n{definitions_str}\n---\nHere is the thematic analysis conducted on these definitions:\n{group_analysis}\n"
             consensus_definition, _ = await self.Inference.acomplete(
-                text=definitions_str, 
+                text=consensus_input_text, 
                 system_prompt=consensus_template, 
                 model=self.model
             )
             cluster_analysis[cluster_num]['consensus_definition'] = consensus_definition
 
         return cluster_analysis
-    
     
     def print_cluster_analysis(self, cluster_analysis, markdown_filename=None):
         # Create a string to store the markdown content
@@ -586,7 +835,6 @@ class WhatLives:
             except Exception as e:
                 print(f"\nError saving markdown file: {e}")
 
-    
     #################################
     ### COMPLETE ANALYSIS WRAPPER ###
     #################################

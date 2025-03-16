@@ -85,13 +85,13 @@ class Inference:
             "bedrock-runtime",
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-            region_name="us-east-2",
+            region_name="us-east-1",
         )
         self.bedrock_base_client = boto3.client(
             "bedrock",
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-            region_name="us-east-2",
+            region_name="us-east-1",
         )
         time_elapsed = timer.get_time()
         print(f"Authenciated to API clients in {time_elapsed} seconds.")
@@ -375,7 +375,7 @@ class Inference:
                         f"Model provider ({model_provider}) not recognized."
                     )
 
-                ### BEDROCK ASYNC COMPLETION
+                ## BEDROCK ASYNC COMPLETION
                 def bedrock_sync_completion(bedrock_body, model_meta):
                     response = self.bedrock_client.invoke_model(
                         body=bedrock_body,
@@ -389,7 +389,18 @@ class Inference:
                 response = await asyncio.to_thread(
                     bedrock_sync_completion, bedrock_body, model_meta
                 )
-
+                
+                # async def bedrock_async_completion(bedrock_body, model_meta):
+                #     response = await self.bedrock_client.start_async_invoke(
+                #         body=bedrock_body,
+                #         modelId=model_meta["model_id"],
+                #         accept="application/json",
+                #         contentType="application/json",
+                #     )
+                #     return response
+                # response = await bedrock_async_completion(bedrock_body, model_meta)
+                ### !! NEED TO FIX TO PROPERLY USE THE BEDROCK ASYNC API ... UNNECESSARY FOR NOW ... !!
+                
                 ### PARSE THROUGH RESPONSE OUTPUT
                 try:
                     if model_provider == "meta":
