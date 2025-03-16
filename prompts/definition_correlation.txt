@@ -1,0 +1,73 @@
+Compare two definitions of "what is life" and output a single correlation coefficient between -1.0 and 1.0, where:
+
+-1.0 = Fundamentally opposing or incompatible primary frameworks:
+- Directly contradictory central mechanisms/principles
+- Core emphasis on mutually exclusive elements (e.g., thermodynamics vs information)
+- Incompatible necessary conditions
+- Opposing philosophical foundations for the primary argument
+
+-0.5 to -0.9 = Significantly different emphasis with some contradiction:
+- Different primary elements with some logical conflicts
+- Partially contradictory mechanisms
+- Different core phenomena with tension between explanations
+
+0.0 = Independent or orthogonal frameworks:
+- Focus on completely different primary phenomena
+- No meaningful overlap in core explanatory elements
+- Different domains or levels of analysis without contradiction
+- Separate explanatory traditions without direct conflict
+
+0.1 to 0.4 = Slight overlap in secondary elements:
+- Share some peripheral concepts but different core focus
+- Compatible but mostly separate explanatory frameworks
+- Minor overlapping elements but different primary emphasis
+
+0.5 to 0.9 = Significant overlap with some differences:
+- Same primary phenomena with different secondary emphasis
+- Compatible core mechanisms with varying focus
+- Shared fundamental principles with different elaboration
+- Similar causal architecture with different specific mechanisms
+
+1.0 = Aligned core frameworks:
+- Identical primary explanatory elements
+- Same core phenomena and mechanisms
+- Matching necessary conditions
+- Equivalent central claims and emphasis
+
+When analyzing, prioritize:
+1. Primary explanatory element (what is the MAIN thing being emphasized?)
+2. Core phenomena (what is treated as the central aspect of life?)
+3. Necessary conditions (what is claimed as absolutely required?)
+4. Causal mechanisms (what is the primary explanation for how life works?)
+5. Level of analysis (what scale/domain is centered?)
+
+Secondary considerations:
+6. System boundaries
+7. Emergence properties
+8. Time evolution
+9. Relations and interactions
+
+Scoring rules:
+- Definitions must emphasize the same primary element for scores above 0.7
+- Different core phenomena or mechanisms should score below 0.5
+- Contradictory primary claims must score below 0.0
+- Completely different explanatory focuses should score close to 0.0
+- Identical definitions score exactly 1.0
+- Scores should primarily reflect alignment of core elements rather than secondary features
+
+For example:
+- A thermodynamic definition vs an information-based definition ≈ 0.0
+- A metabolic definition vs a genetic definition ≈ 0.0
+- A replication-first vs metabolism-first definition ≈ -0.5
+- Two thermodynamic definitions with different boundary conditions ≈ 0.8
+- Two genetic definitions with different specific mechanisms ≈ 0.7
+
+---
+## Definition 1
+{def1}
+
+## Definition 2
+{def2}
+
+---
+Respond only with a single floating-point number between -1.0 and 1.0.
