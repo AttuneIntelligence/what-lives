@@ -12,6 +12,7 @@ import yaml
 from anthropic import (
     Anthropic,
     AnthropicBedrock,
+    AsyncAnthropicBedrock,
     APIError,
     APIStatusError,
     AsyncAnthropic,
@@ -21,6 +22,7 @@ from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 from IPython.display import Markdown, clear_output, display, display_markdown
 from openai import AsyncOpenAI, OpenAI
+import uuid
 
 class Inference:
     def __init__(self):
@@ -67,13 +69,18 @@ class Inference:
         )
 
         ### ANTHROPIC INIT
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            raise ValueError("`ANTHROPIC_API_KEY` environment variable not found.")
-        self.anthropic_client = Anthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY"),
-        )
-        self.anthropic_aclient = AsyncAnthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY"),
+        # if not os.environ.get("ANTHROPIC_API_KEY"):
+        #     raise ValueError("`ANTHROPIC_API_KEY` environment variable not found.")
+        # self.anthropic_client = Anthropic(
+        #     api_key=os.environ.get("ANTHROPIC_API_KEY"),
+        # )
+        # self.anthropic_aclient = AsyncAnthropic(
+        #     api_key=os.environ.get("ANTHROPIC_API_KEY"),
+        # )
+        self.anthropic_aclient = AsyncAnthropicBedrock(
+            aws_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            aws_region="us-east-1",
         )
 
         ### BEDROCK INIT
@@ -336,6 +343,141 @@ class Inference:
             print(i)
 
     ### ASYNCHRONOUS ONE-SHOT WITH RETRY
+#     async def bedrock_acomplete(
+#         self, text, system_prompt=None, model=None, verbose=True, numerical=False
+#     ):
+#         timer = Timer()
+
+#         ### SET MODEL
+#         model = model if model else self.model_config["default_models"]["bedrock"]
+#         if model not in self.model_config["models"]["bedrock"].keys():
+#             raise ValueError("Invalid AWS Bedrock model name provided.")
+#         model_meta = self._get_model_meta(model)
+
+#         ### ALLOW FOR ASYNC RETRY ON API ERRORS
+#         retry_count = 0
+#         while retry_count < self.max_retries:
+#             try:
+#                 ### GENERATE MESSAGE THREAD
+#                 system_template = (
+#                     system_prompt
+#                     if system_prompt
+#                     else self._read_prompt_template("default_prompt")
+#                 )
+#                 model_provider = model_meta["model_id"].split(".")[0]
+#                 if model_provider == "us":
+#                     model_provider = model_meta["model_id"].split(".")[
+#                         1
+#                     ]  # edge case for anthropic bedrock models
+
+#                 ### FORMAT PROMPT ACCORDING TO PROVIDER
+#                 if model_provider == "meta":
+#                     bedrock_body = self._format_meta(system_template, text, model_meta)
+#                 elif model_provider == "anthropic":
+#                     bedrock_body = self._format_anthropic(
+#                         system_template, text, model_meta
+#                     )
+#                 else:
+#                     raise ValueError(
+#                         f"Model provider ({model_provider}) not recognized."
+#                     )
+
+#                 ### BEDROCK ASYNC COMPLETION
+#                 # Start the asynchronous job
+#                 s3_bucket = os.environ.get("BEDROCK_S3_BUCKET", None)
+#                 s3_prefix = os.environ.get("BEDROCK_S3_PREFIX", None)
+#                 if not s3_bucket or not s3_prefix:
+#                     raise ValueError("Please set `BEDROCK_S3_BUCKET` and `BEDROCK_S3_PREFIX` to the .env.")
+
+#                 response = await self.bedrock_client.start_async_invoke(
+#                     modelId=model_meta["model_id"],
+#                     modelInput={
+#                         "contentType": "application/json",
+#                         "body": json.dumps(bedrock_body)  # Ensure the body is JSON serialized
+#                     },
+#                     outputDataConfig={
+#                         "s3OutputDataConfig": {
+#                             "s3Uri": "s3://your-bucket/your-prefix/"
+#                         }
+#                     },
+#                     clientRequestToken=f"request-{uuid.uuid4()}"  # Optional but recommended for tracking
+#                 )
+
+#                 # Get the response ID
+#                 async_response_id = response["responseId"]
+
+#                 # Poll for completion
+#                 max_poll_attempts = 30
+#                 poll_interval = 2  # seconds
+#                 for attempt in range(max_poll_attempts):
+#                     status_response = await self.bedrock_client.get_async_invoke_status(
+#                         responseId=async_response_id
+#                     )
+
+#                     status = status_response["status"]
+#                     if status == "COMPLETED":
+#                         break
+#                     elif status in ["FAILED", "EXPIRED", "STOPPED"]:
+#                         error_message = status_response.get("failureReason", "Unknown error")
+#                         raise ValueError(f"Async inference failed: {error_message}")
+
+#                     await asyncio.sleep(poll_interval)
+#                     poll_interval = min(poll_interval * 1.5, 10)  # Exponential backoff
+
+#                 # Get the output
+#                 output_response = await self.bedrock_client.get_async_invoke_output(
+#                     responseId=async_response_id
+#                 )
+
+#                 # Process the output
+#                 output_body = output_response["body"]
+
+#                 ### PARSE THROUGH RESPONSE OUTPUT
+#                 try:
+#                     if model_provider == "meta":
+#                         final_message, input_tokens, output_tokens = (
+#                             self._handle_meta_response(output_body, verbose)
+#                         )
+#                     elif model_provider == "anthropic":
+#                         final_message, input_tokens, output_tokens = (
+#                             self._handle_anthropic_response(output_body, verbose)
+#                         )
+#                 except Exception as e:
+#                     raise ValueError(f"Failed to parse Bedrock completion: {e}")
+
+#                 ### VALIDATE SQL ID NECESSARY
+#                 if numerical:
+#                     try:
+#                         final_message = self._validate_float(final_message)
+#                     except Exception as e:
+#                         raise ValueError(f"Invalid float response generated: {final_message}")
+
+#                 ### COMPILE METADATA AND RETURN
+#                 time_elapsed = timer.get_time()
+#                 metadata = {
+#                     "input_tokens": input_tokens,
+#                     "output_tokens": output_tokens,
+#                     "cost": self.calculate_cost(
+#                         input_tokens,
+#                         output_tokens,
+#                         model_meta=model_meta,
+#                     ),
+#                     "inference_time": time_elapsed,
+#                     "model": model,
+#                 }
+#                 return final_message, metadata
+
+#             except Exception as e:
+#                 retry_count += 1
+#                 if retry_count == self.max_retries:
+#                     raise e
+
+#                 ### EXPONENTIAL BACKOFF -- 1s, 2s, 4s ...
+#                 delay = min(self.initial_wait * (2 ** (retry_count - 1)), self.max_wait)
+#                 await asyncio.sleep(delay)
+#         raise Exception("Max retries exceeded")
+    
+    
     async def bedrock_acomplete(
         self, text, system_prompt=None, model=None, verbose=True, numerical=False
     ):

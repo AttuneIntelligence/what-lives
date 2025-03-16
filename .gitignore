@@ -6,3 +6,4 @@ node-modules/*
 work/
 .Trash-1000/
 out/
+data/results/*
