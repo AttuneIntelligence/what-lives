@@ -30,7 +30,7 @@ class Inference:
         load_dotenv()
 
         ### REROUTE ANTHROPIC API --> BEDROCK ASYNC ENDPOINT
-        self.redirect_anthropic_to_bedrock = True
+        self.redirect_anthropic_to_bedrock = False
         # ! need to update model_config if False !
         
         ### RUN CONFIG
@@ -118,8 +118,8 @@ class Inference:
         self.openai_embedding_dimensions = 1024
 
         ### BEDROCK CLIENT FOR EMBEDDINGS
-        self.bedrock_embedding_model = "amazon.titan-embed-text-v2:0"
-        self.bedrock_embedding_dimensions = 1536  # specific to titan-embed-text-v1
+        self.bedrock_embedding_model = 	"amazon.titan-embed-text-v2:0"
+        self.bedrock_embedding_dimensions = 1024 # 1536  # specific to titan-embed-text-v1
 
         ### SET TOKENIZER FOR TOKEN / COST ACCOUNTING
         self.tokenizer = tiktoken.get_encoding("cl100k_base")

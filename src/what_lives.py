@@ -12,19 +12,26 @@ import asyncio
 import nest_asyncio
 from tqdm.notebook import tqdm
 from scipy.cluster import hierarchy
-from scipy.spatial.distance import squareform
+from scipy.spatial.distance import squareform, pdist
 import seaborn as sns
 import textwrap
 from collections import defaultdict
 import datetime
 from matplotlib.gridspec import GridSpec
+from sklearn.decomposition import PCA
+import umap
+from matplotlib.lines import Line2D  
+from scipy.stats import gaussian_kde
+from sklearn.manifold import MDS, TSNE
+from sklearn.metrics.pairwise import cosine_similarity
+from matplotlib.animation import FuncAnimation
 
 # nest_asyncio.apply()
 
 from .inference import Inference
 
 class WhatLives:
-    def __init__(self, inference=None, model=None, n_max=None, semaphore_limit=33, n_replicates=6):
+    def __init__(self, inference=None, model=None, n_max=None, semaphore_limit=33, n_replicates=3):
         ### LOAD INFERENCE CLASS FOR LANGUAGE QUERY
         if not inference:
             self.Inference = Inference()
@@ -40,6 +47,7 @@ class WhatLives:
         ### SOURCE XLSX INGRESS
         self.n_max = n_max   # allow for subset of definitions to be analyzed, or `None`
         self.data_dir = "/workspace/what-lives/data"
+        self.embeddings_dir = os.path.join(self.data_dir, "definition-embeddings")
         self.definitions_table_path = os.path.join(self.data_dir, "what_lives_definitions.xlsx")
         self.definitions_all = self.xlsx_to_json(self.definitions_table_path)
         
@@ -62,6 +70,9 @@ class WhatLives:
         ### SETUP PATHS -- AFTER MODEL HAS BEEN INSTANTIATED
         self.output_dir = os.path.join(self.data_dir, "results", self.model)
         self.make_out_dir()
+        
+        ### Initialize empty dictionary for cluster titles
+        self.cluster_titles = {}
         
     #############    
     ### SETUP ###
@@ -533,7 +544,7 @@ class WhatLives:
         fig = plt.figure(figsize=figsize)
 
         # Create a gridspec with proper spacing
-        gs = plt.GridSpec(1, 2, width_ratios=[1, 0.4], wspace=0.03, height_ratios=[1])
+        gs = plt.GridSpec(1, 2, width_ratios=[1, 0.3], wspace=0.02, height_ratios=[1])
 
         # First, compute dendrogram to get the leaf ordering
         dendrogram_info = hierarchy.dendrogram(
@@ -564,8 +575,8 @@ class WhatLives:
         # Set up axes and labels for heatmap
         ax_heatmap.set_xticks(np.arange(len(reordered_names)))
         ax_heatmap.set_yticks(np.arange(len(reordered_names)))
-        ax_heatmap.set_xticklabels(reordered_names, rotation=45, ha='right', fontsize=9)
-        ax_heatmap.set_yticklabels(reordered_names, fontsize=9)
+        ax_heatmap.set_xticklabels(reordered_names, rotation=45, ha='right', fontsize=12)
+        ax_heatmap.set_yticklabels(reordered_names, fontsize=12)
 
         # Flip the y-axis to match dendrogram orientation
         ax_heatmap.invert_yaxis()
@@ -605,11 +616,11 @@ class WhatLives:
 
             # Add vertical divider lines
             if start > 0:
-                ax_heatmap.axvline(x=start-0.5, color='black', linewidth=2.0)
+                ax_heatmap.axvline(x=start-0.5, color='black', linewidth=1.0)
 
             # Add horizontal divider lines - matching flipped orientation
             if start > 0:
-                ax_heatmap.axhline(y=start-0.5, color='black', linewidth=2.0)
+                ax_heatmap.axhline(y=start-0.5, color='black', linewidth=1.0)
 
             # Draw rectangle around each cluster in the heatmap
             rect = plt.Rectangle(
@@ -618,7 +629,7 @@ class WhatLives:
                 end - start + 1,              # Height
                 fill=False,
                 edgecolor=mcolors.rgb2hex(color),
-                linewidth=4,
+                linewidth=6,
                 zorder=10
             )
             ax_heatmap.add_patch(rect)
@@ -710,6 +721,625 @@ class WhatLives:
         cluster_assignments = {name: cluster for name, cluster in zip(names, clusters)}
         return fig, ax_heatmap, ax_dendrogram, cluster_assignments, reordered_idx, color_map
     
+    ##########################################################################
+    ### PLOT WITH FEATURE VECTORS DERIVED DIRECTLY FROM CORRELATION MATRIX ###
+    ##########################################################################
+    def transform_correlation_to_distance(self, correlation_matrix, method="standard", **kwargs):
+        # Ensure the matrix is symmetric and values are in expected range
+        correlation_matrix = (correlation_matrix + correlation_matrix.T) / 2
+
+        # Standard transformation (baseline)
+        if method == "standard":
+            distance_matrix = np.sqrt(2 * (1 - correlation_matrix))
+
+        # Power transformation (power < 1 stretches differences in high correlations)
+        elif method == "power":
+            power = kwargs.get("power", 0.3)  # Lower values give more stretching
+            distance_matrix = (2 * (1 - correlation_matrix)) ** power
+
+        # Logarithmic transformation (amplifies small differences)
+        elif method == "log":
+            epsilon = kwargs.get("epsilon", 1e-10)  # Small value to avoid log(0)
+            # Using -log(similarity) to amplify small differences in high correlations
+            similarity = (correlation_matrix + 1) / 2  # Map to [0, 1] range
+            distance_matrix = -np.log(similarity + epsilon)
+            # Normalize to have max distance = 2 (similar to standard method)
+            distance_matrix = distance_matrix * (2 / distance_matrix.max())
+
+        # Sigmoid transformation (creates more contrast around a threshold)
+        elif method == "sigmoid":
+            center = kwargs.get("center", 0.7)  # Center point of the sigmoid (in correlation space)
+            steepness = kwargs.get("steepness", 12)  # Steepness of the sigmoid curve
+
+            def sigmoid(x, center=center, steepness=steepness):
+                # Convert center from correlation to distance
+                center_dist = np.sqrt(2 * (1 - center))
+                return 1 / (1 + np.exp(-steepness * (x - center_dist)))
+
+            # First get standard distances
+            raw_distances = np.sqrt(2 * (1 - correlation_matrix))
+            # Apply sigmoid transformation
+            distance_matrix = sigmoid(raw_distances)
+            # Scale to [0, 2] range for consistency
+            distance_matrix = distance_matrix * 2 / distance_matrix.max()
+
+        # Adaptive power transformation (uses different powers for different correlation ranges)
+        elif method == "adaptive":
+            min_power = kwargs.get("min_power", 0.1)  # For high correlations
+            max_power = kwargs.get("max_power", 0.5)  # For low correlations
+            threshold_high = kwargs.get("threshold_high", 0.8)
+            threshold_low = kwargs.get("threshold_low", 0.4)
+
+            distance_matrix = np.zeros_like(correlation_matrix)
+            for i in range(correlation_matrix.shape[0]):
+                for j in range(correlation_matrix.shape[1]):
+                    corr = correlation_matrix[i, j]
+                    # Determine power based on correlation value
+                    if corr > threshold_high:
+                        # For high correlations, use lower power to stretch differences
+                        power = min_power
+                    elif corr > threshold_low:
+                        # For medium correlations, use interpolated power
+                        ratio = (corr - threshold_low) / (threshold_high - threshold_low)
+                        power = min_power + (max_power - min_power) * (1 - ratio)
+                    else:
+                        # For low correlations, use higher power
+                        power = max_power
+
+                    # Apply the power transformation
+                    distance_matrix[i, j] = (2 * (1 - corr)) ** power
+
+        else:
+            raise ValueError(f"Unknown transformation method: {method}")
+
+        # Ensure the matrix is symmetric (may not be necessary for all methods)
+        distance_matrix = (distance_matrix + distance_matrix.T) / 2
+
+        return distance_matrix
+    
+    def correlation_based_projections_with_testing(self, correlation_matrix, cluster_assignments, color_map=None, force_recompute=False, test_transforms=True):
+        # Run transformation comparison if requested
+        if test_transforms:
+            print("Testing different distance transformation methods...")
+            distance_matrix = self.apply_best_distance_transformation(
+                correlation_matrix, 
+                cluster_assignments=cluster_assignments,
+                color_map=color_map,
+                projection_method='mds'
+            )
+        else:
+            # Convert correlation matrix to distance matrix with enhanced separation
+            if hasattr(self, 'transform_correlation_to_distance'):
+                # Use the enhanced transformation method if available
+                distance_matrix = self.transform_correlation_to_distance(
+                    correlation_matrix, 
+                    method="power",  # Options: "standard", "power", "log", "sigmoid", "adaptive"
+                    power=0.3  # Lower values (0.1-0.4) enhance separation between highly correlated points
+                )
+            else:
+                # Fallback to standard transformation
+                distance_matrix = np.sqrt(2 * (1 - correlation_matrix))  # Using correlation-based distance
+                distance_matrix = (distance_matrix + distance_matrix.T) / 2  # Ensure perfect symmetry
+
+        # Create a dictionary to store all projections
+        projections = {
+            "distance_matrix": distance_matrix,
+        }
+
+        # Generate 2D projections using different methods
+
+        # 1. MDS (equivalent to PCA for distance matrices)
+        mds_2d_path = os.path.join(self.output_dir, f"mds_2d_corr.npy")
+        if os.path.exists(mds_2d_path) and not force_recompute:
+            print(f"Loading existing MDS 2D projection from {mds_2d_path}")
+            projections["mds_2d"] = np.load(mds_2d_path)
+        else:
+            print("Computing MDS 2D projection from correlation matrix...")
+            mds_2d = MDS(n_components=2, dissimilarity="precomputed", random_state=33, n_jobs=-1)
+            projections["mds_2d"] = mds_2d.fit_transform(distance_matrix)
+            np.save(mds_2d_path, projections["mds_2d"])
+
+        # 2. t-SNE with precomputed distances
+        tsne_2d_path = os.path.join(self.output_dir, f"tsne_2d_corr.npy")
+        if os.path.exists(tsne_2d_path) and not force_recompute:
+            print(f"Loading existing t-SNE 2D projection from {tsne_2d_path}")
+            projections["tsne_2d_corr"] = np.load(tsne_2d_path)
+        else:
+            print("Computing t-SNE 2D projection from correlation matrix...")
+            tsne_2d = TSNE(n_components=2, metric="precomputed", perplexity=min(30, distance_matrix.shape[0]-1), 
+                           init="random", random_state=33)
+            projections["tsne_2d_corr"] = tsne_2d.fit_transform(distance_matrix)
+            np.save(tsne_2d_path, projections["tsne_2d_corr"])
+
+        # 3. UMAP with precomputed distances
+        umap_2d_path = os.path.join(self.output_dir, f"umap_2d_corr.npy")
+        if os.path.exists(umap_2d_path) and not force_recompute:
+            print(f"Loading existing UMAP 2D projection from {umap_2d_path}")
+            projections["umap_2d_corr"] = np.load(umap_2d_path)
+        else:
+            print("Computing UMAP 2D projection from correlation matrix...")
+            umap_2d = umap.UMAP(n_components=2, metric="precomputed", 
+                                n_neighbors=min(15, distance_matrix.shape[0]-1),
+                                min_dist=0.1, random_state=33)
+            projections["umap_2d_corr"] = umap_2d.fit_transform(distance_matrix)
+            np.save(umap_2d_path, projections["umap_2d_corr"])
+
+        # 4. Ensemble 2D (combining MDS, t-SNE, and UMAP)
+        ensemble_2d_path = os.path.join(self.output_dir, f"ensemble_2d_corr.npy")
+        if os.path.exists(ensemble_2d_path) and not force_recompute:
+            print(f"Loading existing Ensemble 2D projection from {ensemble_2d_path}")
+            projections["ensemble_2d_corr"] = np.load(ensemble_2d_path)
+        else:
+            print("Computing Ensemble 2D projection from correlation-based projections...")
+
+            # Normalize each projection to [0,1] range for fair combination
+            normalized_projections = []
+
+            for key in ["mds_2d", "tsne_2d_corr", "umap_2d_corr"]:
+                proj = projections[key]
+                # Normalize to [0,1] range
+                proj_min = proj.min(axis=0)
+                proj_max = proj.max(axis=0)
+                # Add small epsilon to avoid division by zero
+                norm_proj = (proj - proj_min) / (proj_max - proj_min + 1e-10)  
+                normalized_projections.append(norm_proj)
+
+            # Average the normalized projections
+            ensemble_proj = np.mean(normalized_projections, axis=0)
+
+            # Scale back to reasonable range for consistency with other plots
+            ensemble_proj = (ensemble_proj * 2) - 1
+
+            projections["ensemble_2d_corr"] = ensemble_proj
+            np.save(ensemble_2d_path, projections["ensemble_2d_corr"])
+
+        # Generate 3D projections
+
+        # 1. MDS 3D
+        mds_3d_path = os.path.join(self.output_dir, f"mds_3d_corr.npy")
+        if os.path.exists(mds_3d_path) and not force_recompute:
+            print(f"Loading existing MDS 3D projection from {mds_3d_path}")
+            projections["mds_3d"] = np.load(mds_3d_path)
+        else:
+            print("Computing MDS 3D projection from correlation matrix...")
+            mds_3d = MDS(n_components=3, dissimilarity="precomputed", random_state=33, n_jobs=-1)
+            projections["mds_3d"] = mds_3d.fit_transform(distance_matrix)
+            np.save(mds_3d_path, projections["mds_3d"])
+
+        # 2. t-SNE 3D
+        tsne_3d_path = os.path.join(self.output_dir, f"tsne_3d_corr.npy")
+        if os.path.exists(tsne_3d_path) and not force_recompute:
+            print(f"Loading existing t-SNE 3D projection from {tsne_3d_path}")
+            projections["tsne_3d_corr"] = np.load(tsne_3d_path)
+        else:
+            print("Computing t-SNE 3D projection from correlation matrix...")
+            tsne_3d = TSNE(n_components=3, metric="precomputed", perplexity=min(30, distance_matrix.shape[0]-1), 
+                           init="random", random_state=33)
+            projections["tsne_3d_corr"] = tsne_3d.fit_transform(distance_matrix)
+            np.save(tsne_3d_path, projections["tsne_3d_corr"])
+
+        # 3. UMAP 3D
+        umap_3d_path = os.path.join(self.output_dir, f"umap_3d_corr.npy")
+        if os.path.exists(umap_3d_path) and not force_recompute:
+            print(f"Loading existing UMAP 3D projection from {umap_3d_path}")
+            projections["umap_3d_corr"] = np.load(umap_3d_path)
+        else:
+            print("Computing UMAP 3D projection from correlation matrix...")
+            umap_3d = umap.UMAP(n_components=3, metric="precomputed", 
+                               n_neighbors=min(15, distance_matrix.shape[0]-1),
+                               min_dist=0.1, random_state=33)
+            projections["umap_3d_corr"] = umap_3d.fit_transform(distance_matrix)
+            np.save(umap_3d_path, projections["umap_3d_corr"])
+
+        # Create visualizations for each projection with names
+        self.plot_2d_projection(projections["mds_2d"], cluster_assignments, "MDS (Correlation)", color_map, 
+                              filename=f"mds_2d_corr_with_names", include_names=True)
+
+        self.plot_2d_projection(projections["tsne_2d_corr"], cluster_assignments, "t-SNE (Correlation)", color_map, 
+                              filename=f"tsne_2d_corr_with_names", include_names=True)
+
+        self.plot_2d_projection(projections["umap_2d_corr"], cluster_assignments, "UMAP (Correlation)", color_map, 
+                              filename=f"umap_2d_corr_with_names", include_names=True)
+
+        # Create visualization for ensemble projection
+        self.plot_2d_projection(projections["ensemble_2d_corr"], cluster_assignments, "Ensemble (Correlation)", color_map, 
+                              filename=f"ensemble_2d_corr_with_names", include_names=True)
+
+        # Create 3D visualizations
+        self.plot_3d_projection(projections["mds_3d"], cluster_assignments, "MDS (Correlation)", color_map, 
+                              filename=f"mds_3d_corr_with_names", include_names=True)
+
+        self.plot_3d_projection(projections["tsne_3d_corr"], cluster_assignments, "t-SNE (Correlation)", color_map, 
+                              filename=f"tsne_3d_corr_with_names", include_names=True)
+
+        self.plot_3d_projection(projections["umap_3d_corr"], cluster_assignments, "UMAP (Correlation)", color_map, 
+                              filename=f"umap_3d_corr_with_names", include_names=True)
+
+        # Create a panel visualization for correlation-based projections
+        self.plot_correlation_projection_panel(projections, cluster_assignments, color_map, 
+                                             filename="correlation_based_projections_panel")
+
+        return projections
+
+    def plot_correlation_projection_panel(self, projections, cluster_assignments, color_map=None, 
+                                         figsize=(18, 16), filename=None, dpi=300, include_density=True):
+        # Extract names and ensure order matches projections
+        names = [d['Name'] for d in self.definitions]
+
+        # Get cluster IDs in the same order as projections
+        clusters = [cluster_assignments[name] for name in names]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure and 2x2 grid
+        fig = plt.figure(figsize=figsize, dpi=dpi)
+        gs = GridSpec(2, 2, figure=fig, wspace=0.2, hspace=0.25)
+
+        # Define methods to plot (2D projections)
+        methods_2d = [
+            ("mds_2d", "MDS", 0, 0),
+            ("tsne_2d_corr", "t-SNE", 0, 1),
+            ("umap_2d_corr", "UMAP", 1, 0),
+            ("ensemble_2d_corr", "Ensemble", 1, 1),  # Now using ensemble method
+        ]
+
+        # Marker styling
+        marker_size = 90
+        edge_width = 1.0
+        alpha = 0.85
+
+        # Plot each 2D projection in its panel
+        for key, method_name, row, col in methods_2d:
+            if key is None:  # Skip placeholder
+                continue
+
+            ax = fig.add_subplot(gs[row, col])
+
+            # Get projection data
+            projection = projections[key]
+
+            # Set panel styling
+            ax.set_facecolor('#f8f8f8')
+            ax.grid(color='white', linestyle='-', linewidth=1, alpha=0.7)
+
+            for spine in ax.spines.values():
+                spine.set(color='#cccccc', linewidth=1)
+
+            # Extract coordinates
+            x = projection[:, 0]
+            y = projection[:, 1]
+
+            # Add density visualization if requested
+            if include_density:
+                # Calculate density estimation
+                xy = np.vstack([x, y])
+                kde = gaussian_kde(xy)
+                z = kde(xy)
+
+                # Create a fine grid for contour plotting
+                x_min, x_max = x.min() - 0.1 * np.ptp(x), x.max() + 0.1 * np.ptp(x)
+                y_min, y_max = y.min() - 0.1 * np.ptp(y), y.max() + 0.1 * np.ptp(y)
+                xi, yi = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
+                positions = np.vstack([xi.ravel(), yi.ravel()])
+
+                # Calculate density on the grid
+                zi = kde(positions).reshape(xi.shape)
+
+                # Plot density as filled contours with a light alpha
+                contour = ax.contourf(xi, yi, zi, 15, cmap='viridis', alpha=0.15, zorder=1)
+
+                # Add contour lines
+                ax.contour(xi, yi, zi, 8, colors='black', linewidths=0.5, alpha=0.3, zorder=2)
+
+            # Plot each point with its cluster color
+            for j, (x_j, y_j) in enumerate(projection):
+                cluster = clusters[j]
+                color = color_map[cluster]
+                ax.scatter(x_j, y_j, c=[color], s=marker_size, alpha=alpha, 
+                         edgecolors='black', linewidths=edge_width, zorder=10)
+
+            # Set title and labels
+            ax.set_title(f"{method_name}", fontsize=14, fontweight='bold')
+            # ax.set_xlabel(f"Dimension 1", fontsize=10, fontweight='bold')
+            # ax.set_ylabel(f"Dimension 2", fontsize=10, fontweight='bold')
+
+        # Add a common legend at the bottom with cluster titles
+        try:
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'{self.get_cluster_label(cluster)}') 
+                              for cluster in sorted(color_map.keys())]
+        except AttributeError:
+            # Fall back to cluster numbers if get_cluster_label is not defined
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'Cluster {cluster}') 
+                              for cluster in sorted(color_map.keys())]
+
+        # Place legend below the subplots
+        fig.legend(handles=legend_elements, title='Clusters', 
+                  title_fontsize=12, fontsize=10,
+                  loc='lower center', bbox_to_anchor=(0.5, 0.02), 
+                  ncol=min(5, len(color_map.keys())), 
+                  framealpha=0.9, 
+                  edgecolor='#cccccc')
+
+        # Add overall title
+        plt.suptitle("Correlation Feature Projection - What is Life", 
+                    fontsize=18, fontweight='bold', y=0.98)
+
+        # Save figure if filename provided
+        if filename:
+            fout = os.path.join(self.output_dir, f"{filename}.png")
+            plt.savefig(fout, dpi=dpi, bbox_inches='tight')
+            print(f"Plot saved to {fout}")
+
+        return fig
+    
+    ### COMPARE CORRELATION --> DISTANCE MATRIX TRANSFORMATION OPTIONS FOR BEST OPTION THAT HIGHLIGHTS DISTANCES IN HIGHLY CORRELATED INDIVIDUALS
+    def compare_distance_transformations(self, correlation_matrix, cluster_assignments, color_map=None, 
+                                        projection_method="mds", n_components=2, save_plot=True):
+        # Define transformation methods to test
+        transformation_methods = {
+            "standard": {"method": "standard"},
+            "power_0.5": {"method": "power", "power": 0.5},
+            "power_0.3": {"method": "power", "power": 0.3},
+            "power_0.1": {"method": "power", "power": 0.1},
+            "log": {"method": "log"},
+            "sigmoid": {"method": "sigmoid", "center": 0.7, "steepness": 12},
+            "adaptive": {"method": "adaptive", "min_power": 0.1, "max_power": 0.5}
+        }
+
+        # Dictionary to store results
+        results = {}
+
+        # Define projection method to use
+        def apply_projection(distance_matrix, method="mds"):
+            if method == "mds":
+                model = MDS(n_components=n_components, dissimilarity="precomputed", 
+                           random_state=33, n_jobs=-1)
+            elif method == "tsne":
+                model = TSNE(n_components=n_components, metric="precomputed", 
+                            init="random", random_state=33,
+                            perplexity=min(30, distance_matrix.shape[0]-1))
+            elif method == "umap":
+                model = umap.UMAP(n_components=n_components, metric="precomputed", 
+                                n_neighbors=min(15, distance_matrix.shape[0]-1),
+                                min_dist=0.1, random_state=33)
+            else:
+                raise ValueError(f"Unknown projection method: {method}")
+
+            projection = model.fit_transform(distance_matrix)
+            return projection
+
+        # Compute stress metric (how well distances are preserved)
+        def compute_stress(orig_distances, projection):
+            # Compute pairwise distances in projection space
+            proj_distances = squareform(pdist(projection))
+
+            # Flatten the distance matrices for comparison (upper triangle)
+            n = orig_distances.shape[0]
+            flat_orig = np.array([orig_distances[i, j] for i in range(n) for j in range(i+1, n)])
+            flat_proj = np.array([proj_distances[i, j] for i in range(n) for j in range(i+1, n)])
+
+            # Normalize both to [0, 1] for fair comparison
+            flat_orig = flat_orig / flat_orig.max()
+            flat_proj = flat_proj / flat_proj.max()
+
+            # Compute stress as mean squared error
+            stress = np.mean((flat_orig - flat_proj) ** 2)
+
+            return stress, flat_orig, flat_proj
+
+        # Extract names and cluster assignments
+        names = [d['Name'] for d in self.definitions]
+        clusters = [cluster_assignments[name] for name in names]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure to compare transformation methods
+        n_methods = len(transformation_methods)
+        fig_width = 22
+        fig_height = 4 * ((n_methods + 1) // 2)  # Adjust height based on number of methods
+
+        fig, axes = plt.subplots(nrows=(n_methods + 1) // 2, ncols=2, 
+                               figsize=(fig_width, fig_height), dpi=150)
+        axes = axes.flatten()
+
+        # Test each transformation method
+        for i, (method_name, params) in enumerate(transformation_methods.items()):
+            print(f"Testing {method_name}...")
+
+            # Apply transformation
+            if not hasattr(self, 'transform_correlation_to_distance'):
+                # Fallback if the method is not available
+                distance_matrix = np.sqrt(2 * (1 - correlation_matrix))
+                distance_matrix = (distance_matrix + distance_matrix.T) / 2
+            else:
+                distance_matrix = self.transform_correlation_to_distance(correlation_matrix, **params)
+
+            # Apply projection
+            projection = apply_projection(distance_matrix, method=projection_method)
+
+            # Compute stress metric
+            stress, flat_orig, flat_proj = compute_stress(distance_matrix, projection)
+
+            # Store results
+            results[method_name] = {
+                "distance_matrix": distance_matrix,
+                "projection": projection,
+                "stress": stress
+            }
+
+            # Plot projection
+            ax = axes[i]
+
+            # Set panel styling
+            ax.set_facecolor('#f8f8f8')
+            ax.grid(color='white', linestyle='-', linewidth=1, alpha=0.7)
+
+            for spine in ax.spines.values():
+                spine.set(color='#cccccc', linewidth=1)
+
+            # Extract coordinates
+            x = projection[:, 0]
+            y = projection[:, 1]
+
+            # Add density visualization
+            try:
+                # Calculate density estimation
+                xy = np.vstack([x, y])
+                kde = gaussian_kde(xy)
+                z = kde(xy)
+
+                # Create a fine grid for contour plotting
+                x_min, x_max = x.min() - 0.1 * np.ptp(x), x.max() + 0.1 * np.ptp(x)
+                y_min, y_max = y.min() - 0.1 * np.ptp(y), y.max() + 0.1 * np.ptp(y)
+                xi, yi = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
+                positions = np.vstack([xi.ravel(), yi.ravel()])
+
+                # Calculate density on the grid
+                zi = kde(positions).reshape(xi.shape)
+
+                # Plot density as filled contours with a light alpha
+                contour = ax.contourf(xi, yi, zi, 15, cmap='viridis', alpha=0.15, zorder=1)
+
+                # Add contour lines
+                ax.contour(xi, yi, zi, 8, colors='black', linewidths=0.5, alpha=0.3, zorder=2)
+            except:
+                # Skip density plot if there's an error (e.g., for very small datasets)
+                pass
+
+            # Plot each point with its cluster color
+            marker_size = 90
+            edge_width = 1.0
+            alpha = 0.85
+
+            for j, (x_j, y_j) in enumerate(projection):
+                cluster = clusters[j]
+                color = color_map[cluster]
+                ax.scatter(x_j, y_j, c=[color], s=marker_size, alpha=alpha, 
+                         edgecolors='black', linewidths=edge_width, zorder=10)
+
+                # Add last names for a few selected points (avoid overcrowding)
+                if n_components == 2 and j % 3 == 0:  # Show every 3rd name
+                    last_name = self.definitions[j]['Last']
+                    ax.text(x_j, y_j, last_name, fontsize=7, ha='center', va='bottom',
+                           bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=1), 
+                           zorder=20)
+
+            # Set title and labels
+            title = f"{method_name} (Stress: {stress:.4f})"
+            ax.set_title(title, fontsize=14, fontweight='bold')
+            ax.set_xlabel(f"Dimension 1", fontsize=10, fontweight='bold')
+            ax.set_ylabel(f"Dimension 2", fontsize=10, fontweight='bold')
+
+        # Hide any extra subplots if there are empty spots
+        for i in range(len(transformation_methods), len(axes)):
+            axes[i].axis('off')
+
+        # Add overall title
+        plt.suptitle(f"Comparison of Distance Transformation Methods ({projection_method.upper()})", 
+                    fontsize=18, fontweight='bold', y=0.98)
+
+        plt.tight_layout()
+        plt.subplots_adjust(top=0.95)
+
+        # Save figure if requested
+        if save_plot:
+            filename = f"distance_transform_comparison_{projection_method}.png"
+            filepath = os.path.join(self.output_dir, filename)
+            plt.savefig(filepath, dpi=200, bbox_inches='tight')
+            print(f"Comparison plot saved to {filepath}")
+
+        # Sort methods by stress (lower is better)
+        sorted_methods = sorted(results.items(), key=lambda x: x[1]['stress'])
+
+        print("\nRanking of transformation methods by stress (lower is better):")
+        for rank, (method_name, result) in enumerate(sorted_methods, 1):
+            print(f"  {rank}. {method_name}: {result['stress']:.4f}")
+
+        # Return the best method and results
+        best_method = sorted_methods[0][0]
+        print(f"\nBest method: {best_method}")
+
+        return results, best_method
+
+    def apply_best_distance_transformation(self, correlation_matrix, force_test=False, **kwargs):
+        # If specific parameters are provided and testing is not forced, use them directly
+        if kwargs and not force_test:
+            if not hasattr(self, 'transform_correlation_to_distance'):
+                print("Warning: transform_correlation_to_distance method not found. Using standard transformation.")
+                distance_matrix = np.sqrt(2 * (1 - correlation_matrix))
+                distance_matrix = (distance_matrix + distance_matrix.T) / 2
+            else:
+                distance_matrix = self.transform_correlation_to_distance(correlation_matrix, **kwargs)
+            return distance_matrix
+
+        # Load correlation matrix if needed
+        if correlation_matrix is None:
+            corr_path = os.path.join(self.output_dir, f"m_correlation_{self.model}.npy")
+            if not os.path.exists(corr_path):
+                raise ValueError("No correlation matrix found. Please provide one or run correlation analysis first.")
+            correlation_matrix = np.load(corr_path)
+
+        # Get cluster assignments if needed for testing
+        cluster_assignments = kwargs.get('cluster_assignments', None)
+        if cluster_assignments is None:
+            print("Testing requires cluster assignments. Generating from correlation matrix...")
+            _, _, _, cluster_assignments, _, _ = self.plot_clustered_correlation_heatmap(
+                correlation_matrix, self.definitions, filename=None
+            )
+
+        # Run comparison of methods
+        results, best_method = self.compare_distance_transformations(
+            correlation_matrix, 
+            cluster_assignments, 
+            color_map=kwargs.get('color_map', None),
+            projection_method=kwargs.get('projection_method', 'mds')
+        )
+        print(f"CHOSEN TRANSFORMATION: {best_method}")
+
+        # Get parameters for the best method
+        if best_method == "standard":
+            best_params = {"method": "standard"}
+        elif best_method.startswith("power_"):
+            power = float(best_method.split("_")[1])
+            best_params = {"method": "power", "power": power}
+        elif best_method == "log":
+            best_params = {"method": "log"}
+        elif best_method == "sigmoid":
+            best_params = {"method": "sigmoid", "center": 0.7, "steepness": 12}
+        elif best_method == "adaptive":
+            best_params = {"method": "adaptive", "min_power": 0.1, "max_power": 0.5}
+        else:
+            best_params = {"method": "standard"}
+
+        # Apply the best transformation
+        if not hasattr(self, 'transform_correlation_to_distance'):
+            print("Warning: transform_correlation_to_distance method not found. Using standard transformation.")
+            distance_matrix = np.sqrt(2 * (1 - correlation_matrix))
+            distance_matrix = (distance_matrix + distance_matrix.T) / 2
+        else:
+            print(f"Applying best transformation method: {best_method}")
+            distance_matrix = self.transform_correlation_to_distance(correlation_matrix, **best_params)
+
+        return distance_matrix
+
     #############################
     ### SEMANTIC LLM ANALYSIS ###
     #############################
@@ -815,7 +1445,7 @@ class WhatLives:
             )
             cluster_analysis[cluster_num]['group_analysis'] = group_analysis
             
-            ### a) GET CONSENSUS DEFINITION FOR CLUSTER
+            ### b) GET CONSENSUS DEFINITION FOR CLUSTER
             consensus_template = self.Inference._read_prompt_template("cluster_consensus")
             consensus_input_text = f"Here are the definitions:\n{definitions_str}\n---\nHere is the thematic analysis conducted on these definitions:\n{group_analysis}\n"
             consensus_definition, _ = await self.Inference.acomplete(
@@ -824,6 +1454,19 @@ class WhatLives:
                 model=self.model
             )
             cluster_analysis[cluster_num]['consensus_definition'] = consensus_definition
+            
+            ### c) GET CLUSTER TITLE
+            title_template = self.Inference._read_prompt_template("cluster_title")
+            title_input_text = f"Consensus Definition: {consensus_definition}\n---\nThematic Analysis: {group_analysis}\n"
+            cluster_title, _ = await self.Inference.acomplete(
+                text=title_input_text, 
+                system_prompt=title_template, 
+                model=self.model
+            )
+            cluster_analysis[cluster_num]['title'] = cluster_title
+            
+            # Store title in self.cluster_titles
+            self.cluster_titles[cluster_num] = cluster_title
 
         return cluster_analysis
     
@@ -841,6 +1484,10 @@ class WhatLives:
             print("-" * 40)
             for name in cluster_analysis[cluster_num]['names']:
                 print(f"• {name}")
+            # Print group title
+            print("\nTitle:")
+            print("-" * 40)
+            print(cluster_analysis[cluster_num]['title'])
             # Print consensus
             print("\nCONSENSUS:")
             print("-" * 40)
@@ -849,12 +1496,15 @@ class WhatLives:
             print("\nANALYSIS:")
             print("-" * 40)
             print(cluster_analysis[cluster_num]['group_analysis'])
+           
 
             # Add to markdown content
             markdown_content += f"# CLUSTER {cluster_num}\n\n"
             markdown_content += "## MEMBERS\n\n"
             for name in cluster_analysis[cluster_num]['names']:
                 markdown_content += f"* {name}\n"
+            markdown_content += "\n## TITLE\n\n"
+            markdown_content += f"{cluster_analysis[cluster_num]['title']}\n\n"
             markdown_content += "\n## CONSENSUS\n\n"
             markdown_content += f"{cluster_analysis[cluster_num]['consensus_definition']}\n\n"
             markdown_content += "## ANALYSIS\n\n"
@@ -870,6 +1520,665 @@ class WhatLives:
                 print(f"\nCluster analysis saved to {fout}")
             except Exception as e:
                 print(f"\nError saving markdown file: {e}")
+                
+    ##############################################
+    ### EMBEDDING PROJECTION AND VISUALIZATION ###
+    ##############################################
+    def get_cluster_label(self, cluster):
+        if hasattr(self, 'cluster_titles') and cluster in self.cluster_titles:
+            return self.cluster_titles[cluster]
+        return f"Cluster {cluster}"
+    
+    def get_definition_embeddings(self, embedding_type="openai", force_recompute=False):
+        ### SET EMBEDDING TYPE + DIMENSION
+        if embedding_type not in ["openai", "bedrock"]:
+            raise ValueError("Embedding type must be 'openai' or 'bedrock'")
+        if embedding_type == "openai":
+            embedding_dim = self.Inference.openai_embedding_dimensions
+        else:  # bedrock
+            embedding_dim = self.Inference.bedrock_embedding_dimensions
+
+        ### READ EMBEDDINGS FROM A FILE IF THEY EXIST
+        embedding_path = os.path.join(self.embeddings_dir, f"embeddings_{embedding_type}.npy")
+        if os.path.exists(embedding_path) and not force_recompute:
+            print(f"Loading existing embeddings from {embedding_path}")
+            return np.load(embedding_path)
+
+        ### INITIALIZE EMPTY MATRIX AND GET EMBEDDINGS FOR EACH DEFINITION
+        n_definitions = len(self.definitions)
+        embeddings = np.zeros((n_definitions, embedding_dim))
+        for i, definition in enumerate(tqdm(self.definitions, desc="Getting embeddings")):
+            text = definition['Definition']
+            if embedding_type == "openai":
+                embedding = self.Inference.openai_embedding(text)
+            else:  # bedrock
+                embedding = self.Inference.bedrock_embedding(text)
+            embeddings[i] = embedding
+        np.save(embedding_path, embeddings)
+        print(f"Embeddings saved to {embedding_path}")
+        return embeddings
+
+    ### PROJECT DEFINITIONS VIA UMAP
+    def umap_projection(self, embeddings, n_components=2, n_neighbors=18, min_dist=0.09, random_state=33, force_recompute=False):
+        umap_path = os.path.join(self.output_dir, f"umap_projection_{n_components}d.npy")
+        if os.path.exists(umap_path) and not force_recompute:
+            print(f"Loading existing UMAP projection from {umap_path}")
+            return np.load(umap_path)
+
+        ### INITIALIZE UMAP + FIT / TRANSFORM
+        umap_model = umap.UMAP(
+            n_components=n_components,
+            n_neighbors=n_neighbors,
+            min_dist=min_dist,
+            random_state=random_state
+        )
+        ### PCA INTERMEDIATE TO REMOVE NOISE --> UMAP
+        # embeddings = self.pca_projection(embeddings, n_components=33)
+        umap_embeddings = umap_model.fit_transform(embeddings)
+        np.save(umap_path, umap_embeddings)
+        print(f"UMAP projection saved to {umap_path}")
+        return umap_embeddings
+
+    ### PCA PROJECTION
+    def pca_projection(self, embeddings, n_components=2, random_state=33, force_recompute=False):
+        pca_path = os.path.join(self.output_dir, f"pca_projection_{n_components}d.npy")
+        if os.path.exists(pca_path) and not force_recompute:
+            print(f"Loading existing PCA projection from {pca_path}")
+            return np.load(pca_path)
+
+        ### INITIALIZE PCA + FIT DATA
+        pca_model = PCA(n_components=n_components, random_state=random_state)
+        pca_embeddings = pca_model.fit_transform(embeddings)
+        np.save(pca_path, pca_embeddings)
+        print(f"PCA projection saved to {pca_path}")
+        explained_variance = pca_model.explained_variance_ratio_
+        print(f"Explained variance ratio: {explained_variance}")
+        print(f"Cumulative explained variance: {np.sum(explained_variance):.4f}")
+        return pca_embeddings
+
+    def tsne_projection(self, embeddings, n_components=2, perplexity=24, random_state=33, force_recompute=False):
+        tsne_path = os.path.join(self.output_dir, f"tsne_projection_{n_components}d.npy")
+        if os.path.exists(tsne_path) and not force_recompute:
+            print(f"Loading existing t-SNE projection from {tsne_path}")
+            return np.load(tsne_path)
+
+        ### INITIALIZE tSNE + TRANSFORM DATA
+        tsne_model = TSNE(
+            n_components=n_components,
+            perplexity=perplexity,
+            random_state=random_state
+        )
+        ### PCA INTERMEDIATE TO REMOVE NOISE --> UMAP
+        # embeddings = self.pca_projection(embeddings, n_components=33)
+        tsne_embeddings = tsne_model.fit_transform(embeddings)
+        np.save(tsne_path, tsne_embeddings)
+        print(f"t-SNE projection saved to {tsne_path}")
+        return tsne_embeddings
+
+    ### ENSEMBLE PROJECTION METHOD
+    def ensemble_projection(self, embeddings, methods=['umap', 'pca', 'tsne'], n_components=2, force_recompute=False):
+        ensemble_path = os.path.join(self.output_dir, f"ensemble_projection_{n_components}d.npy")
+        if os.path.exists(ensemble_path) and not force_recompute:
+            print(f"Loading existing ensemble projection from {ensemble_path}")
+            return np.load(ensemble_path)
+
+        projections = []
+
+        if 'umap' in methods:
+            umap_proj = self.umap_projection(embeddings, n_components=n_components, force_recompute=force_recompute)
+            # Normalize to [0,1] range
+            umap_min = umap_proj.min(axis=0)
+            umap_max = umap_proj.max(axis=0)
+            umap_norm = (umap_proj - umap_min) / (umap_max - umap_min + 1e-10)  # Add small epsilon to avoid division by zero
+            projections.append(umap_norm)
+
+        if 'pca' in methods:
+            pca_proj = self.pca_projection(embeddings, n_components=n_components, force_recompute=force_recompute)
+            pca_min = pca_proj.min(axis=0)
+            pca_max = pca_proj.max(axis=0)
+            pca_norm = (pca_proj - pca_min) / (pca_max - pca_min + 1e-10)
+            projections.append(pca_norm)
+
+        if 'tsne' in methods:
+            tsne_proj = self.tsne_projection(embeddings, n_components=n_components, force_recompute=force_recompute)
+            tsne_min = tsne_proj.min(axis=0)
+            tsne_max = tsne_proj.max(axis=0)
+            tsne_norm = (tsne_proj - tsne_min) / (tsne_max - tsne_min + 1e-10)
+            projections.append(tsne_norm)
+
+        # Average the normalized projections
+        ensemble_proj = np.mean(projections, axis=0)
+
+        # Scale back to reasonable range for consistency with other plots
+        ensemble_proj = (ensemble_proj * 2) - 1
+
+        # Save the projection
+        np.save(ensemble_path, ensemble_proj)
+        print(f"Ensemble projection saved to {ensemble_path}")
+
+        return ensemble_proj
+
+    # plot_2d_projection to use last names and cluster titles
+    def plot_2d_projection(self, projection, cluster_assignments, method_name, color_map=None, 
+                           figsize=(14, 12), filename=None, include_names=True, dpi=300, include_density=True):
+        # Use last names instead of full names
+        names = [d['Last'] for d in self.definitions]
+        full_names = [d['Name'] for d in self.definitions]
+
+        # Get cluster IDs in the same order as projection
+        clusters = [cluster_assignments[d['Name']] for d in self.definitions]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure with improved styling
+        fig, ax = plt.subplots(figsize=figsize, dpi=dpi)
+
+        # Add subtle light gray background with white grid
+        ax.set_facecolor('#f8f8f8')
+        ax.grid(color='white', linestyle='-', linewidth=1, alpha=0.7)
+
+        # Extract x and y coordinates
+        x = projection[:, 0]
+        y = projection[:, 1]
+
+        # Add density visualization if requested
+        if include_density:
+            # 1. Calculate density estimation
+            xy = np.vstack([x, y])
+            z = gaussian_kde(xy)(xy)
+
+            # 2. Add density-based contours
+            # Create a fine grid for contour plotting
+            x_min, x_max = x.min() - 0.1 * np.ptp(x), x.max() + 0.1 * np.ptp(x)
+            y_min, y_max = y.min() - 0.1 * np.ptp(y), y.max() + 0.1 * np.ptp(y)
+            xi, yi = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
+            positions = np.vstack([xi.ravel(), yi.ravel()])
+
+            # Calculate density on the grid
+            zi = gaussian_kde(xy)(positions).reshape(xi.shape)
+
+            # 3. Plot density as filled contours with a light alpha
+            contour = ax.contourf(xi, yi, zi, 15, cmap='viridis', alpha=0.15, zorder=1)
+
+            # 4. Add contour lines
+            contour_lines = ax.contour(xi, yi, zi, 8, colors='black', linewidths=0.5, alpha=0.3, zorder=2)
+
+            # # 5. Add colorbar for density
+            # cbar = plt.colorbar(contour, ax=ax, pad=0.01, aspect=30, shrink=0.7)
+            # cbar.ax.set_ylabel('Density', fontsize=10, fontweight='bold')
+            # cbar.ax.tick_params(labelsize=8)
+
+        # Calculate better offsets for text labels
+        x_range = np.ptp(x)
+        y_range = np.ptp(y)
+        x_offset = -x_range * 0.01  # Slight offset to the left
+        y_offset = y_range * 0.01   # Slight offset upward
+
+        # Adjust marker properties for clarity
+        marker_size = 100
+        edge_width = 1.5
+        alpha = 0.85
+
+        # Plot each point with its cluster color
+        for i, (x_i, y_i) in enumerate(projection):
+            cluster = clusters[i]
+            color = color_map[cluster]
+            ax.scatter(x_i, y_i, c=[color], s=marker_size, alpha=alpha, 
+                      edgecolors='black', linewidths=edge_width, zorder=20)
+
+            # Add names with improved positioning if requested
+            if include_names:
+                # Use text with subtle background for better readability
+                ax.text(x_i + x_offset, y_i + y_offset, names[i], 
+                       fontsize=9, ha='right', va='bottom', 
+                       bbox=dict(facecolor='white', alpha=0.85, 
+                                 edgecolor='none', pad=1, boxstyle='round,pad=0.1'),
+                       zorder=30)  # Ensure text is on top
+
+        # Set title and labels with improved styling
+        title = f"{method_name} Projection of Life Definitions"
+        ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
+        ax.set_xlabel(f"{method_name} Dimension 1", fontsize=12, fontweight='bold')
+        ax.set_ylabel(f"{method_name} Dimension 2", fontsize=12, fontweight='bold')
+
+        # Add subtle border around the plot
+        for spine in ax.spines.values():
+            spine.set(color='#cccccc', linewidth=1)
+
+        # Add legend with improved styling - use cluster titles instead of numbers
+        # This assumes you have a get_cluster_label method; if not, revert to cluster numbers
+        try:
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'{self.get_cluster_label(cluster)}') 
+                              for cluster in sorted(color_map.keys())]
+        except AttributeError:
+            # Fall back to cluster numbers if get_cluster_label is not defined
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'Cluster {cluster}') 
+                              for cluster in sorted(color_map.keys())]
+
+        ax.legend(handles=legend_elements, title='Clusters', 
+                 title_fontsize=12, fontsize=10,
+                 loc='best', framealpha=0.9, 
+                 edgecolor='#cccccc')
+
+        # Adjust layout
+        plt.tight_layout()
+
+        # Save figure if filename provided
+        if filename:
+            fout = os.path.join(self.output_dir, f"{filename}.png")
+            plt.savefig(fout, dpi=dpi, bbox_inches='tight')
+            print(f"Plot saved to {fout}")
+
+        return fig, ax
+
+
+    # Modify plot_3d_projection to use last names and cluster titles
+    def plot_3d_projection(self, projection, cluster_assignments, method_name, color_map=None, 
+                          figsize=(10, 9), filename=None, include_names=True, dpi=300):
+        # Check if projection is 3D
+        if projection.shape[1] != 3:
+            raise ValueError("Projection must have 3 dimensions for 3D plotting")
+
+        # Extract last names and ensure order matches projection
+        names = [d['Last'] for d in self.definitions]
+
+        # Get cluster IDs in the same order as projection
+        clusters = [cluster_assignments[d['Name']] for d in self.definitions]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure and 3D axes with improved styling
+        fig = plt.figure(figsize=figsize, dpi=dpi)
+        ax = fig.add_subplot(111, projection='3d')
+
+        # Improve 3D plot aesthetics
+        ax.xaxis.pane.fill = False
+        ax.yaxis.pane.fill = False
+        ax.zaxis.pane.fill = False
+        ax.xaxis.pane.set_edgecolor('#cccccc')
+        ax.yaxis.pane.set_edgecolor('#cccccc')
+        ax.zaxis.pane.set_edgecolor('#cccccc')
+        ax.grid(color='#eeeeee', linestyle='-', linewidth=0.5, alpha=0.8)
+
+        # Calculate improved offsets for text labels
+        x_range = np.ptp(projection[:, 0])
+        y_range = np.ptp(projection[:, 1])
+        z_range = np.ptp(projection[:, 2])
+        x_offset = -x_range * 0.01
+        y_offset = y_range * 0.01
+        z_offset = z_range * 0.01
+
+        # Adjust marker properties
+        marker_size = 100
+        edge_width = 1.0
+        alpha = 0.85
+
+        # Plot each point with its cluster color
+        for i, (x, y, z) in enumerate(projection):
+            cluster = clusters[i]
+            color = color_map[cluster]
+            ax.scatter(x, y, z, c=[color], s=marker_size, alpha=alpha, 
+                      edgecolors='black', linewidths=edge_width, zorder=10)
+
+            # Add names with improved positioning if requested
+            if include_names:
+                ax.text(x + x_offset, y + y_offset, z + z_offset, names[i], 
+                       fontsize=8, ha='right', va='bottom', zorder=20)
+
+        # Set title and labels with improved styling
+        title = f"3D {method_name} Projection of Life Definitions"
+        ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
+        ax.set_xlabel(f"{method_name} Dimension 1", fontsize=12, fontweight='bold')
+        ax.set_ylabel(f"{method_name} Dimension 2", fontsize=12, fontweight='bold')
+        ax.set_zlabel(f"{method_name} Dimension 3", fontsize=12, fontweight='bold')
+
+        # Add legend with improved styling - use cluster titles
+        legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                markerfacecolor=color_map[cluster], 
+                                markeredgecolor='black',
+                                markeredgewidth=1,
+                                markersize=10, 
+                                label=f'{self.get_cluster_label(cluster)}') 
+                          for cluster in sorted(color_map.keys())]
+
+        ax.legend(handles=legend_elements, title='Clusters', 
+                 title_fontsize=12, fontsize=10,
+                 loc='best', framealpha=0.9, 
+                 edgecolor='#cccccc')
+
+        # Adjust layout
+        plt.tight_layout()
+
+        # Save figure if filename provided
+        if filename:
+            fout = os.path.join(self.output_dir, f"{filename}.png")
+            plt.savefig(fout, dpi=dpi, bbox_inches='tight')
+            print(f"Plot saved to {fout}")
+
+        return fig, ax
+
+    ### 2D PANNEL PROJECTION
+    def plot_2d_panel(self, projections, cluster_assignments, color_map=None, 
+                     figsize=(18, 16), filename=None, dpi=300, include_density=True):
+        from scipy.stats import gaussian_kde
+
+        # Extract names and ensure order matches projections
+        names = [d['Name'] for d in self.definitions]
+
+        # Get cluster IDs in the same order as projections
+        clusters = [cluster_assignments[name] for name in names]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure and 2x2 grid
+        fig = plt.figure(figsize=figsize, dpi=dpi)
+        gs = GridSpec(2, 2, figure=fig, wspace=0.2, hspace=0.25)
+
+        # Define methods to plot (2D projections)
+        methods_2d = [
+            ("umap_2d", "UMAP", 0, 0),
+            ("pca_2d", "PCA", 0, 1),
+            ("tsne_2d", "t-SNE", 1, 0),
+            ("ensemble_2d", "Ensemble", 1, 1)
+        ]
+
+        # Marker styling
+        marker_size = 90
+        edge_width = 1.0
+        alpha = 0.85
+
+        # Plot each 2D projection in its panel
+        for key, method_name, row, col in methods_2d:
+            ax = fig.add_subplot(gs[row, col])
+
+            # Get projection data (handling ensemble separately)
+            if key == "ensemble_2d":
+                projection = projections.get(key, None)
+                if projection is None:
+                    # Generate ensemble if not provided
+                    projection = self.ensemble_projection(projections["embeddings"], n_components=2)
+                    projections["ensemble_2d"] = projection
+            else:
+                projection = projections[key]
+
+            # Set panel styling
+            ax.set_facecolor('#f8f8f8')
+            ax.grid(color='white', linestyle='-', linewidth=1, alpha=0.7)
+
+            for spine in ax.spines.values():
+                spine.set(color='#cccccc', linewidth=1)
+
+            # Extract coordinates
+            x = projection[:, 0]
+            y = projection[:, 1]
+
+            # Add density visualization if requested
+            if include_density:
+                # Calculate density estimation
+                xy = np.vstack([x, y])
+                kde = gaussian_kde(xy)
+                z = kde(xy)
+
+                # Create a fine grid for contour plotting
+                x_min, x_max = x.min() - 0.1 * np.ptp(x), x.max() + 0.1 * np.ptp(x)
+                y_min, y_max = y.min() - 0.1 * np.ptp(y), y.max() + 0.1 * np.ptp(y)
+                xi, yi = np.mgrid[x_min:x_max:100j, y_min:y_max:100j]
+                positions = np.vstack([xi.ravel(), yi.ravel()])
+
+                # Calculate density on the grid
+                zi = kde(positions).reshape(xi.shape)
+
+                # Plot density as filled contours with a light alpha
+                contour = ax.contourf(xi, yi, zi, 15, cmap='viridis', alpha=0.15, zorder=1)
+
+                # Add contour lines
+                ax.contour(xi, yi, zi, 8, colors='black', linewidths=0.5, alpha=0.3, zorder=2)
+
+                # # Add a small colorbar if this is the first subplot
+                # if row == 0 and col == 0:
+                #     cbar = plt.colorbar(contour, ax=ax, pad=0.01, aspect=30, shrink=0.7)
+                #     cbar.ax.set_ylabel('Density', fontsize=10, fontweight='bold')
+                #     cbar.ax.tick_params(labelsize=8)
+
+            # Plot each point with its cluster color
+            for j, (x_j, y_j) in enumerate(projection):
+                cluster = clusters[j]
+                color = color_map[cluster]
+                ax.scatter(x_j, y_j, c=[color], s=marker_size, alpha=alpha, 
+                         edgecolors='black', linewidths=edge_width, zorder=10)
+
+            # Set title and labels
+            ax.set_title(f"2D {method_name}", fontsize=14, fontweight='bold')
+            ax.set_xlabel(f"Dimension 1", fontsize=10, fontweight='bold')
+            ax.set_ylabel(f"Dimension 2", fontsize=10, fontweight='bold')
+
+        # Add a common legend at the bottom
+        try:
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'{self.get_cluster_label(cluster)}') 
+                              for cluster in sorted(color_map.keys())]
+        except AttributeError:
+            # Fall back to cluster numbers if get_cluster_label is not defined
+            legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                     markerfacecolor=color_map[cluster], 
+                                     markeredgecolor='black',
+                                     markeredgewidth=1,
+                                     markersize=10, 
+                                     label=f'Cluster {cluster}') 
+                              for cluster in sorted(color_map.keys())]
+
+        # Place legend below the subplots
+        fig.legend(handles=legend_elements, title='Clusters', 
+                  title_fontsize=12, fontsize=10,
+                  loc='lower center', bbox_to_anchor=(0.5, 0.02), 
+                  ncol=min(5, len(color_map.keys())), 
+                  framealpha=0.9, 
+                  edgecolor='#cccccc')
+
+        # Add overall title
+        plt.suptitle("Comparison of 2D Dimensionality Reduction Techniques", 
+                    fontsize=18, fontweight='bold', y=0.98)
+
+        # Save figure if filename provided
+        if filename:
+            fout = os.path.join(self.output_dir, f"{filename}.png")
+            plt.savefig(fout, dpi=dpi, bbox_inches='tight')
+            print(f"Plot saved to {fout}")
+
+        return fig
+
+    def plot_3d_panel(self, projections, cluster_assignments, color_map=None, 
+                     figsize=(18, 16), filename=None, dpi=300):
+        # Extract last names and ensure order matches projections
+        names = [d['Last'] for d in self.definitions]
+
+        # Get cluster IDs in the same order as projections
+        clusters = [cluster_assignments[d['Name']] for d in self.definitions]
+
+        # Create color map if not provided
+        if color_map is None:
+            unique_clusters = sorted(set(clusters))
+            cluster_colors = sns.color_palette("husl", n_colors=len(unique_clusters))
+            color_map = dict(zip(unique_clusters, cluster_colors))
+
+        # Create figure and 2x2 grid
+        fig = plt.figure(figsize=figsize, dpi=dpi)
+        gs = GridSpec(2, 2, figure=fig, wspace=0.2, hspace=0.25)
+
+        # Define methods to plot (3D projections)
+        methods_3d = [
+            ("umap_3d", "UMAP", 0, 0),
+            ("pca_3d", "PCA", 0, 1),
+            ("tsne_3d", "t-SNE", 1, 0),
+            ("ensemble_3d", "Ensemble", 1, 1)
+        ]
+
+        # Marker styling
+        marker_size = 80
+        edge_width = 0.8
+        alpha = 0.85
+
+        # Plot each 3D projection in its panel
+        for key, method_name, row, col in methods_3d:
+            ax = fig.add_subplot(gs[row, col], projection='3d')
+
+            # Get projection data (handling ensemble separately)
+            if key == "ensemble_3d":
+                projection = projections.get(key, None)
+                if projection is None:
+                    # Generate ensemble if not provided
+                    projection = self.ensemble_projection(projections["embeddings"], n_components=3)
+                    projections["ensemble_3d"] = projection
+            else:
+                projection = projections[key]
+
+            # Improve 3D plot aesthetics
+            ax.xaxis.pane.fill = False
+            ax.yaxis.pane.fill = False
+            ax.zaxis.pane.fill = False
+            ax.xaxis.pane.set_edgecolor('#cccccc')
+            ax.yaxis.pane.set_edgecolor('#cccccc')
+            ax.zaxis.pane.set_edgecolor('#cccccc')
+            ax.grid(color='#eeeeee', linestyle='-', linewidth=0.5, alpha=0.8)
+
+            # Plot each point with its cluster color
+            for j, (x, y, z) in enumerate(projection):
+                cluster = clusters[j]
+                color = color_map[cluster]
+                ax.scatter(x, y, z, c=[color], s=marker_size, alpha=alpha, 
+                          edgecolors='black', linewidths=edge_width, zorder=10)
+
+            # Set title and labels
+            ax.set_title(f"3D {method_name}", fontsize=14, fontweight='bold')
+            ax.set_xlabel(f"Dim 1", fontsize=10, fontweight='bold')
+            ax.set_ylabel(f"Dim 2", fontsize=10, fontweight='bold')
+            ax.set_zlabel(f"Dim 3", fontsize=10, fontweight='bold')
+
+        # Add a common legend at the bottom with cluster titles
+        legend_elements = [Line2D([0], [0], marker='o', color='w', 
+                                 markerfacecolor=color_map[cluster], 
+                                 markeredgecolor='black',
+                                 markeredgewidth=1,
+                                 markersize=10, 
+                                 label=f'{self.get_cluster_label(cluster)}') 
+                          for cluster in sorted(color_map.keys())]
+
+        # Place legend below the subplots
+        fig.legend(handles=legend_elements, title='Clusters', 
+                  title_fontsize=12, fontsize=10,
+                  loc='lower center', bbox_to_anchor=(0.5, 0.02), 
+                  ncol=min(5, len(color_map.keys())), 
+                  framealpha=0.9, 
+                  edgecolor='#cccccc')
+
+        # Add overall title
+        plt.suptitle("Comparison of 3D Dimensionality Reduction Techniques", 
+                    fontsize=18, fontweight='bold', y=0.98)
+
+        # Save figure if filename provided
+        if filename:
+            fout = os.path.join(self.output_dir, f"{filename}.png")
+            plt.savefig(fout, dpi=dpi, bbox_inches='tight')
+            print(f"Plot saved to {fout}")
+
+        return fig
+
+    ### ENHANCED PROJECT AND VISUALIZE METHOD
+    def project_and_visualize_embeddings(self, embedding_type="openai", cluster_assignments=None, color_map=None, force_recompute=False):
+        # Get embeddings
+        embeddings = self.get_definition_embeddings(embedding_type=embedding_type, force_recompute=force_recompute)
+
+        # If no cluster assignments provided, use existing ones
+        if cluster_assignments is None:
+            # Load correlation matrix if needed
+            corr_path = os.path.join(self.output_dir, f"m_correlation_{self.model}.npy")
+            if not os.path.exists(corr_path):
+                raise ValueError("No correlation matrix found. Please run correlation analysis first.")
+
+            correlation_matrix = np.load(corr_path)
+
+            # Get cluster assignments from correlation matrix
+            _, _, _, cluster_assignments, _, color_map = self.plot_clustered_correlation_heatmap(
+                correlation_matrix, self.definitions, filename=None
+            )
+
+        # Calculate all projections
+        projections = {
+            "embeddings": embeddings,
+        }
+
+        # 2D projections
+        projections["umap_2d"] = self.umap_projection(embeddings, n_components=2, force_recompute=force_recompute)
+        projections["pca_2d"] = self.pca_projection(embeddings, n_components=2, force_recompute=force_recompute)
+        projections["tsne_2d"] = self.tsne_projection(embeddings, n_components=2, force_recompute=force_recompute)
+        projections["ensemble_2d"] = self.ensemble_projection(embeddings, n_components=2, force_recompute=force_recompute)
+
+        # 3D projections
+        projections["umap_3d"] = self.umap_projection(embeddings, n_components=3, force_recompute=force_recompute)
+        projections["pca_3d"] = self.pca_projection(embeddings, n_components=3, force_recompute=force_recompute)
+        projections["tsne_3d"] = self.tsne_projection(embeddings, n_components=3, force_recompute=force_recompute)
+        projections["ensemble_3d"] = self.ensemble_projection(embeddings, n_components=3, force_recompute=force_recompute)
+
+        # Create individual plots with names
+        self.plot_2d_projection(projections["umap_2d"], cluster_assignments, "UMAP", color_map, 
+                              filename=f"umap_2d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_2d_projection(projections["pca_2d"], cluster_assignments, "PCA", color_map, 
+                              filename=f"pca_2d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_2d_projection(projections["tsne_2d"], cluster_assignments, "t-SNE", color_map, 
+                              filename=f"tsne_2d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_2d_projection(projections["ensemble_2d"], cluster_assignments, "Ensemble", color_map, 
+                              filename=f"ensemble_2d_{embedding_type}_with_names", include_names=True)
+
+        # Create 3D plots with names if needed
+        self.plot_3d_projection(projections["umap_3d"], cluster_assignments, "UMAP", color_map, 
+                              filename=f"umap_3d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_3d_projection(projections["pca_3d"], cluster_assignments, "PCA", color_map, 
+                              filename=f"pca_3d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_3d_projection(projections["tsne_3d"], cluster_assignments, "t-SNE", color_map, 
+                              filename=f"tsne_3d_{embedding_type}_with_names", include_names=True)
+
+        self.plot_3d_projection(projections["ensemble_3d"], cluster_assignments, "Ensemble", color_map, 
+                              filename=f"ensemble_3d_{embedding_type}_with_names", include_names=True)
+
+        # Create 2D and 3D panel visualizations (without names)
+        self.plot_2d_panel(projections, cluster_assignments, color_map, 
+                          filename=f"2d_projections_panel_{embedding_type}")
+
+        self.plot_3d_panel(projections, cluster_assignments, color_map, 
+                          filename=f"3d_projections_panel_{embedding_type}")
+
+        return projections
 
     #################################
     ### COMPLETE ANALYSIS WRAPPER ###
@@ -882,8 +2191,28 @@ class WhatLives:
         fig, ax_heatmap, ax_dendrogram, cluster_assignments, reordered_idx, color_map = self.plot_clustered_correlation_heatmap(M, self.definitions, filename='clustered_correlations.png')
         plt.show()
         
-        ### PERFORM SEMANTIC ANALYSIS
+        # PERFORM SEMANTIC ANALYSIS
         stats = self.analyze_clusters(cluster_assignments, self.definitions)
-        self.print_cluster_definitions(cluster_assignments, self.definitions, color_map)
+        # self.print_cluster_definitions(cluster_assignments, self.definitions, color_map)
         analysis = asyncio.run(self.get_cluster_analysis(cluster_assignments, self.definitions))
         self.print_cluster_analysis(analysis, markdown_filename="cluster_semantic_analysis.md")
+        
+        # PROJECT INTO EMBEDDING SPACE WITH APPLIED COLOR MAP
+        projections = self.project_and_visualize_embeddings(
+            embedding_type="bedrock",
+            cluster_assignments=cluster_assignments,
+            color_map=color_map,
+            force_recompute=True
+        )
+        
+        ### EMBED INTO 2/3D DIRECTLY FROM CORRELATION FEATURE VECTORS
+        corr_projections = self.correlation_based_projections_with_testing(
+            correlation_matrix=M,
+            cluster_assignments=cluster_assignments,
+            color_map=color_map,
+            force_recompute=True,
+            test_transforms=True  # Set to True to compare all transformation methods
+        )
+
+        ### ! DONE !
+        print("\nAnalysis complete! All visualizations and results have been saved to the output directory.")
